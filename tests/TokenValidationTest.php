@@ -2,7 +2,7 @@
 /** 
  * This file will test the SDK
  *
- * PHP version 5.4, 5.5, 5.6, 7.0, 7.1, 7.2
+ * PHP version 5.6, 7.0, 7.1, 7.2
  *
  * @category Test_File
  * @package  Paggi
@@ -79,13 +79,3 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($target->isExpiringToken(self::$initialToken));
     }
 }
-/* This file will test the SDK
-*
-* PHP version 5.4, 5.5, 5.6, 7.0, 7.1, 7.2
-*
-* @category Test_File
-* @package  Paggi
-* @author   Paggi Integracoes <email@email.com>
-* @license  MIT www.www.www
-* @link     http://url.com
-2592000*/
