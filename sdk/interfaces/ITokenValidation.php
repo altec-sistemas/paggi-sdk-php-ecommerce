@@ -26,14 +26,11 @@ interface ITokenValidation
     /**
      * Function who will validate the token
      *
-     * @param [type] $issuer       Token issuer
-     * @param [type] $audience     Token audience
-     * @param [type] $id           Tokens id
      * @param [type] $initialToken Token for authentication
      * 
      * @return boolean
      */
-    public function isValidToken($issuer, $audience, $id, $initialToken);
+    public function isValidToken($initialToken);
 
     /**
      * Function who will verify if the token is expired

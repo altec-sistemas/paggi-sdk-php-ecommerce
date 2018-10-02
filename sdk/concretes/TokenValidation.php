@@ -32,14 +32,11 @@ class TokenValidation
     /**
      * Function responsible for the token's validation
      *
-     * @param string $issuer       Token's issuer
-     * @param string $audience     Token's audience
-     * @param string $id           Token's id
      * @param string $initialToken Authentication Token
      * 
      * @return boolean
      */
-    public function isValidToken($issuer, $audience, $id, $initialToken)
+    public function isValidToken($initialToken)
     {
         $token = (new Parser())->parse((string) $initialToken);
         $token->getClaims();

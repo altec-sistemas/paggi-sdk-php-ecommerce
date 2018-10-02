@@ -27,9 +27,6 @@ use Paggi\SDK;
  */ 
 class TokenValidationTest extends \PHPUnit_Framework_TestCase
 {
-    static public $issuer = "PAGGI";
-    static public $audience = "PAGGI";
-    static public $id = "6b9f44bc-a0c0-45d3-97f4-d6aebdbf50dc";
     static public $initialToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJQQUdHSSIsImV4"
         . "cCI6NjIwMTY3Nzc0NjYsImlhdCI6MTUzNjc3NzQ2NiwiaXNzIjoiUEFHR0kiLCJqdG"
          . "kiOiI2YjlmNDRiYy1hMGMwLTQ1ZDMtOTdmNC1kNmFlYmRiZjUwZGMiLCJuYmY"
@@ -48,9 +45,6 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
         $target = new \Paggi\SDK\TokenValidation();
         $this->assertTrue(
             $target->isValidToken(
-                self::$issuer, 
-                self::$audience, 
-                self::$id,
                 self::$initialToken
             )
         );
