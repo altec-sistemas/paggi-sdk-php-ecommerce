@@ -13,6 +13,8 @@
 
  namespace Paggi\SDK;
  use Paggi\SDK\Interfaces;
+ use Lcobucci\JWT\ValidationData;
+ use Lcobucci\JWT\Parser;
 
  /** 
   * This file verify if the token is valid
@@ -39,7 +41,9 @@ class TokenValidation
      */
     public function isValidToken($issuer, $audience, $id, $initialToken)
     {
-        
+        $token = (new Parser())->parse((string) $initialToken);
+        $token->getClaims();
+        return $token->hasClaim('jti') ? true : false;
     }
 
     /**
@@ -51,7 +55,8 @@ class TokenValidation
      */
     public function isExpiredToken($initialToken)
     {
-        
+        $time = self::expirateHelper($initialToken);
+        return (time() > $time) ? true : false;
     }
 
     /**
@@ -63,6 +68,20 @@ class TokenValidation
      */
     public function isExpiringToken($initialToken)
     {
-        
+        $time = self::expirateHelper($initialToken);
+        return (time() > $time - 2592000) ? true : false;
+    }
+    
+    /**
+     * Function who will help the other function to not repeat code
+     *
+     * @param string $initialToken Authentication Token
+     * 
+     * @return void
+     */
+    public static function expirateHelper($initialToken)
+    {
+        $token = (new Parser())->parse((string) $initialToken);
+        return $token->getClaim('exp');
     }
 }

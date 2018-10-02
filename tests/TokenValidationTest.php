@@ -12,7 +12,6 @@
  */ 
 namespace Paggi\Tests;
 use PHPUnit\Framework\TestCase;
-use GuzzleHttp\Client;
 use Lcobucci\JWT\ValidationData;
 use Paggi\Interfaces;
 use Paggi\SDK;
