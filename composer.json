@@ -1,0 +1,42 @@
+{
+    "name": "paggi/sdk",
+    "homepage": "https://docs.paggi.com",
+    "description": "Paggi PHP SDK - Ecommerce",
+    "type": "library",
+    "keywords": [
+      "paggi.com",
+      "paggi",
+      "payments",
+      "pagamentos",
+      "payments brazil",
+      "pagamento brasil"
+    ],
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Paggi IT Team",
+        "email": "suporteintegracoes@paggi.com"
+      }
+    ],
+    "require": {
+      "doctrine/inflector": "^1.1",
+      "php-curl-class/php-curl-class": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8"
+    },
+    "autoload": {
+      "psr-4": {
+        "Paggi\\SDK\\": "sdk/concretes/",
+        "Paggi\\SDK\\Traits\\": "skd/Traits/",
+        "Paggi\\SDK\\Interfaces\\": "sdk/interfaces/",
+        "Paggi\\Tests\\": "tests/"
+      }
+    },
+    "config": {
+        "platform": {
+            "php":"5.5"
+        }
+    }
+  }
+  
