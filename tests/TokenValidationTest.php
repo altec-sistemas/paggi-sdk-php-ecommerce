@@ -27,7 +27,8 @@ use Paggi\SDK;
  */ 
 class TokenValidationTest extends \PHPUnit_Framework_TestCase
 {
-    static public $initialToken = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJQQUdHSSIsImV4"
+    static public $initialToken 
+        = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJQQUdHSSIsImV4"
         . "cCI6NjIwMTY3Nzc0NjYsImlhdCI6MTUzNjc3NzQ2NiwiaXNzIjoiUEFHR0kiLCJqdG"
          . "kiOiI2YjlmNDRiYy1hMGMwLTQ1ZDMtOTdmNC1kNmFlYmRiZjUwZGMiLCJuYmY"
           . "iOjE1MzY3Nzc0NjUsInBlcm1pc3Npb25zIjpbeyJwYXJ0bmVyX2lkIjoiZjlmMjZiM"
@@ -35,6 +36,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
             . "sic3lzdGVtX3VzZXIiXX1dLCJzdWIiOiJkYzcxNDFkZC1hYjQzLTQ1NmMtOWM3Mi05"
              . "MDNkOGFkYTAwZWUiLCJ0eXAiOiJhY2Nlc3MifQ.G6roX-MkbB7ofCkSOK5H8Z"
               . "vnk5XIvDXp9gvr25gPbY0MF5-8E0wgutMsaows2cQcksUg8TgJqlaKTya9FsV9nA";
+    
     /**
      * Function responsible to test the validation of "IsValidToken"
      *
