@@ -25,7 +25,7 @@ use Paggi\SDK;
  */ 
 class TokenValidationTest extends \PHPUnit_Framework_TestCase
 {
-    static private $_initialToken = $_ENV["ENVTOKEN"];
+    static private $_initialToken = getenv('ENVTOKEN');
     /**
      * Function responsible to test the validation of "IsValidToken"
      *
