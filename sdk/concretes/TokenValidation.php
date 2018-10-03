@@ -19,7 +19,7 @@
  /** 
   * This file verify if the token is valid
   *
-  * PHP version 5.4, 5.5, 5.6, 7.0, 7.1, 7.2
+  * PHP version 5.6, 7.0, 7.1, 7.2
   *
   * @category Test_File
   * @package  Paggi
