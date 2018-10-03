@@ -3,6 +3,8 @@ language: php
 
 # Versions of PHP you want your project run with.
 php:
+  - 5.4
+  - 5.5
   - 5.6
   - 7.0
   - 7.1
@@ -12,9 +14,13 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
+  - pyrus install pear/PHP_CodeSniffer
+  - phpenv rehash
 
 # Commands you want to run that will verify your build.
-script:  ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/*
+script:  
+  - ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/*
+  - phpcs --report=summary *
 
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
