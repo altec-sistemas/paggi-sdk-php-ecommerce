@@ -25,7 +25,6 @@ use Paggi\SDK;
  */ 
 class TokenValidationTest extends \PHPUnit_Framework_TestCase
 {
-    static private $_initialToken = getenv('ENVTOKEN');
     /**
      * Function responsible to test the validation of "IsValidToken"
      *
@@ -35,7 +34,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     {
         $target = new \Paggi\SDK\TokenValidation();
         $this->assertTrue(
-            $target->isValidToken(self::$_initialToken)
+            $target->isValidToken(self::_getToken())
         );
     }
 
@@ -47,7 +46,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     public function testIsExpiredToken()
     {
         $target = new \Paggi\SDK\TokenValidation();
-        $this->assertFalse($target->isExpiredToken(self::$_initialToken));
+        $this->assertFalse($target->isExpiredToken(self::_getToken()));
     }
 
     /**
@@ -58,6 +57,16 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     public function testIsExpiringToken()
     {
         $target = new \Paggi\SDK\TokenValidation();
-        $this->assertFalse($target->isExpiringToken(self::$_initialToken));
+        $this->assertFalse($target->isExpiringToken(self::_getToken()));
+    }
+
+    /**
+     * Function who will return the token. 
+     *
+     * @return void
+     */
+    static private function _getToken()
+    {
+        return getenv('ENVTOKEN');
     }
 }
