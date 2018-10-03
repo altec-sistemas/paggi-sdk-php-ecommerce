@@ -43,7 +43,11 @@ class TokenValidation
             return false;
         }
         $partnerId = $token->getClaim('permissions')[0]->partner_id;
-        return isset($partnerId) ? true : false;
+        return (
+            isset($partnerId) 
+            && !is_null($partnerId) 
+            && !empty($partnerId)
+        ) ? true : false;
     }
 
     /**
