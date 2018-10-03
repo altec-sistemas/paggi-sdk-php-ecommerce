@@ -39,8 +39,11 @@ class TokenValidation
     public function isValidToken($initialToken)
     {
         $token = (new Parser())->parse((string) $initialToken);
-        $token->getClaims();
-        return $token->hasClaim('jti') ? true : false;
+        if (!$token->hasClaim('permissions')) {
+            return false;
+        }
+        $partnerId = $token->getClaim('permissions')[0]->partner_id;
+        return isset($partnerId) ? true : false;
     }
 
     /**
