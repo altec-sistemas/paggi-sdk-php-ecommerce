@@ -43,7 +43,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     {
         $target = new \Paggi\SDK\TokenValidation();
         $this->assertTrue(
-            $target->isValidToken()
+            $target->isValidToken(self::$_initialToken)
         );
     }
 
@@ -55,7 +55,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     public function testIsExpiredToken()
     {
         $target = new \Paggi\SDK\TokenValidation();
-        $this->assertFalse($target->isExpiredToken());
+        $this->assertFalse($target->isExpiredToken(self::$_initialToken));
     }
 
     /**
@@ -66,6 +66,6 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     public function testIsExpiringToken()
     {
         $target = new \Paggi\SDK\TokenValidation();
-        $this->assertFalse($target->isExpiringToken());
+        $this->assertFalse($target->isExpiringToken(self::$_initialToken));
     }
 }
