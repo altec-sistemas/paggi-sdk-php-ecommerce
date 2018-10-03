@@ -29,16 +29,23 @@
   */ 
 class TokenValidation
 {
+    static private $_initialToken 
+        = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJQQUdHSSIsImV4"
+        . "cCI6NjIwMTY3Nzc0NjYsImlhdCI6MTUzNjc3NzQ2NiwiaXNzIjoiUEFHR0kiLCJqdG"
+         . "kiOiI2YjlmNDRiYy1hMGMwLTQ1ZDMtOTdmNC1kNmFlYmRiZjUwZGMiLCJuYmY"
+          . "iOjE1MzY3Nzc0NjUsInBlcm1pc3Npb25zIjpbeyJwYXJ0bmVyX2lkIjoiZjlmMjZiM"
+           . "2YtYWU0Ni00YzY5LTg5M2MtNTJiMTU3ZTkxMDkwIiwicGVybWlzc2lvbnMiOl"
+            . "sic3lzdGVtX3VzZXIiXX1dLCJzdWIiOiJkYzcxNDFkZC1hYjQzLTQ1NmMtOWM3Mi05"
+             . "MDNkOGFkYTAwZWUiLCJ0eXAiOiJhY2Nlc3MifQ.G6roX-MkbB7ofCkSOK5H8Z"
+              . "vnk5XIvDXp9gvr25gPbY0MF5-8E0wgutMsaows2cQcksUg8TgJqlaKTya9FsV9nA";
     /**
      * Function responsible for the token's validation
-     *
-     * @param string $initialToken Authentication Token
      * 
      * @return boolean
      */
-    public function isValidToken($initialToken)
+    public function isValidToken()
     {
-        $token = (new Parser())->parse((string) $initialToken);
+        $token = (new Parser())->parse((string) self::$_initialToken);
         if (!$token->hasClaim('permissions')) {
             return false;
         }
@@ -48,40 +55,34 @@ class TokenValidation
 
     /**
      * Function responsible for the token's expiration
-     *
-     * @param string $initialToken Authentication Token
      * 
      * @return boolean
      */
-    public function isExpiredToken($initialToken)
+    public function isExpiredToken()
     {
-        $time = self::expirateHelper($initialToken);
+        $time = self::expirateHelper();
         return (time() > $time) ? true : false;
     }
 
     /**
      * Function who verify if token's expiration date is within a month from today
-     *
-     * @param string $initialToken Authentication Token
      * 
      * @return boolean
      */
-    public function isExpiringToken($initialToken)
+    public function isExpiringToken()
     {
-        $time = self::expirateHelper($initialToken);
+        $time = self::expirateHelper();
         return (time() > $time - 2592000) ? true : false;
     }
     
     /**
      * Function who will help the other function to not repeat code
-     *
-     * @param string $initialToken Authentication Token
      * 
      * @return void
      */
-    public static function expirateHelper($initialToken)
+    public static function expirateHelper()
     {
-        $token = (new Parser())->parse((string) $initialToken);
+        $token = (new Parser())->parse((string) self::$_initialToken);
         return $token->getClaim('exp');
     }
 }
