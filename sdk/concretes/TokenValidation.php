@@ -36,7 +36,7 @@ class TokenValidation
      * 
      * @return boolean
      */
-    public function isValidToken($initialToken)
+    public static function isValidToken($initialToken)
     {
         $token = (new Parser())->parse((string) $initialToken);
         if (!$token->hasClaim('permissions')) {
@@ -53,7 +53,7 @@ class TokenValidation
      * 
      * @return boolean
      */
-    public function isExpiredToken($initialToken)
+    public static function isExpiredToken($initialToken)
     {
         $time = self::expirateHelper($initialToken);
         return (time() > $time) ? true : false;
@@ -66,7 +66,7 @@ class TokenValidation
      * 
      * @return boolean
      */
-    public function isExpiringToken($initialToken)
+    public static function isExpiringToken($initialToken)
     {
         $time = self::expirateHelper($initialToken);
         return (time() > $time - 2592000) ? true : false;
