@@ -44,8 +44,8 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     {
         if (TokenValidation::isValidToken($token)) {
             self::$_token = $token;
-            return true;
-            self:setPartnerId();
+            $retorno = self::setPartnerIdByToken($token);
+            return $retorno;
         }
         return false;
     }
@@ -60,7 +60,8 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     public function setStaging($environmentStatus)
     {
         if (is_bool($environmentStatus)) {
-            $_environment = $environmentStatus;
+            self::$_environment = $environmentStatus;
+
             return true;
         }
         return false;
@@ -100,7 +101,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     public function setPartnerIdByPartnerId($partnerId) 
     {
         if (isset($partnerId) || !is_null($partnerId) || !empty($partnerId)) {
-            $_partnerId = $partnerId;
+            self::$_partnerId = $partnerId;
             return true;
         }
         return false;
