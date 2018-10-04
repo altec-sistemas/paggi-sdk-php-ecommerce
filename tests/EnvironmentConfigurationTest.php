@@ -1,6 +1,6 @@
 <?php
 /** 
- * This file will test the SDK
+ * This file will test the Environment
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Paggi\SDK;
 
 /**
- * This class will test the token validation
+ * This class will test the Environment validation
  * 
  * @category Environment_Test_Class
  * @package  Paggi

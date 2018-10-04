@@ -17,11 +17,11 @@
  use Paggi\SDK\Interfaces\IEnvironmentConfiguration;
 
  /** 
-  * This file verify if the token is valid
+  * This class verify the environment's configuration
   *
   * PHP version 5.6, 7.0, 7.1, 7.2
   *
-  * @category Environment_File
+  * @category Environment_Class
   * @package  Paggi
   * @author   Paggi Integracoes <ti-integracoes@paggi.com>
   * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
