@@ -110,7 +110,6 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetPartnerIdByPartnerId()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        var_dump(getenv('PARTNERID'));
         $this->assertTrue($target->setPartnerIdByPartnerId(getenv('PARTNERID')));
     }
 
