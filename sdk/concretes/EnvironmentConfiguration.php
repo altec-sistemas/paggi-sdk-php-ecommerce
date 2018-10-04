@@ -4,11 +4,11 @@
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
- * @category Test_File
+ * @category Environment_File
  * @package  Paggi
- * @author   Paggi Integracoes <email@email.com>
- * @license  MIT www.www.www
- * @link     http://url.com
+ * @author   Paggi Integracoes <ti-integracoes@paggi.com>
+ * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
+ * @link     http://developers.paggi.com
  */ 
 
  namespace Paggi\SDK;
@@ -21,11 +21,11 @@
   *
   * PHP version 5.6, 7.0, 7.1, 7.2
   *
-  * @category Test_File
+  * @category Environment_File
   * @package  Paggi
-  * @author   Paggi Integracoes <email@email.com>
-  * @license  MIT www.www.www
-  * @link     http://url.com
+  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
+  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
+  * @link     http://developers.paggi.com
   */ 
 class EnvironmentConfiguration implements IEnvironmentConfiguration
 {
