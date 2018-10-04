@@ -48,7 +48,12 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
         $this->assertFalse(
-            $target->setToken("..")
+            $target->setToken(
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9." . 
+                "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6I" . 
+                "kpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ" . 
+                ".SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+            )
         );
     }
 
