@@ -25,18 +25,6 @@ use Paggi\SDK;
  */ 
 class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
 {
-    static private $_token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJQQUdHSSIsImV4"
-    . "cCI6NjIwMTY3Nzc0NjYsImlhdCI6MTUzNjc3NzQ2NiwiaXNzIjoiUEFHR0kiLCJqdG"
-     . "kiOiI2YjlmNDRiYy1hMGMwLTQ1ZDMtOTdmNC1kNmFlYmRiZjUwZGMiLCJuYmY"
-      . "iOjE1MzY3Nzc0NjUsInBlcm1pc3Npb25zIjpbeyJwYXJ0bmVyX2lkIjoiZjlmMjZiM"
-       . "2YtYWU0Ni00YzY5LTg5M2MtNTJiMTU3ZTkxMDkwIiwicGVybWlzc2lvbnMiOl"
-        . "sic3lzdGVtX3VzZXIiXX1dLCJzdWIiOiJkYzcxNDFkZC1hYjQzLTQ1NmMtOWM3Mi05"
-         . "MDNkOGFkYTAwZWUiLCJ0eXAiOiJhY2Nlc3MifQ.G6roX-MkbB7ofCkSOK5H8Z"
-          . "vnk5XIvDXp9gvr25gPbY0MF5-8E0wgutMsaows2cQcksUg8TgJqlaKTya9FsV9nA";//getenv('ENVTOKEN');
-    static private $_partnerId 
-        =  "f9f26b3f-ae46-4c69-893c-52b157e91090";
-    static private $_environment = true;
-    
     /**
      * Function responsible to test "setToken" to return true
      *
