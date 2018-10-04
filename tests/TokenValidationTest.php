@@ -4,7 +4,7 @@
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
- * @category Test_File
+ * @category Test_Token_File
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -17,7 +17,7 @@ use Paggi\SDK;
 /**
  * This class will test the token validation
  * 
- * @category Test_Class
+ * @category Test_Token_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
