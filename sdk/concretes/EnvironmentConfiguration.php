@@ -44,8 +44,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     {
         if (TokenValidation::isValidToken($token)) {
             self::$_token = $token;
-            $retorno = self::setPartnerIdByToken($token);
-            return $retorno;
+            return true;
         }
         return false;
     }
