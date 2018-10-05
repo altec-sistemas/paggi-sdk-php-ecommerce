@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * This file will test the Environment
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
@@ -9,20 +9,21 @@
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
- */ 
+ */
 namespace Paggi\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Paggi\SDK;
 
 /**
  * This class will test the Environment validation
- * 
+ *
  * @category Environment_Test_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
- */ 
+ */
 class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -139,5 +140,4 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
         $target = new \Paggi\SDK\EnvironmentConfiguration();
         $this->assertInternalType('string', $target->getPartnerId());
     }
-
 }
