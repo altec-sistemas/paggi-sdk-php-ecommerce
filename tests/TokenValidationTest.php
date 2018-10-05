@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * This file will test the SDK
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
@@ -9,20 +9,21 @@
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
- */ 
+ */
 namespace Paggi\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Paggi\SDK;
 
 /**
  * This class will test the token validation
- * 
+ *
  * @category Test_Token_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
- */ 
+ */
 class TokenValidationTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -34,7 +35,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     {
         $target = new \Paggi\SDK\TokenValidation();
         $this->assertTrue(
-            $target->isValidToken(self::_getToken())
+            $target->isValidToken(self::getToken())
         );
     }
 
@@ -46,7 +47,7 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     public function testIsExpiredToken()
     {
         $target = new \Paggi\SDK\TokenValidation();
-        $this->assertFalse($target->isExpiredToken(self::_getToken()));
+        $this->assertFalse($target->isExpiredToken(self::getToken()));
     }
 
     /**
@@ -57,15 +58,15 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
     public function testIsExpiringToken()
     {
         $target = new \Paggi\SDK\TokenValidation();
-        $this->assertFalse($target->isExpiringToken(self::_getToken()));
+        $this->assertFalse($target->isExpiringToken(self::getToken()));
     }
 
     /**
-     * Function who will return the token. 
+     * Function who will return the token.
      *
      * @return void
      */
-    static private function _getToken()
+    private static function getToken()
     {
         return getenv('ENVTOKEN');
     }
