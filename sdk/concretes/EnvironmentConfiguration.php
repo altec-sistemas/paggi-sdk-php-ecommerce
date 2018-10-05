@@ -39,8 +39,6 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     public function __construct()
     {
         $builder = new \DI\ContainerBuilder();
-        $builder->useAutowiring(false);
-        $builder->useAnnotations(false);
         $builder->addDefinitions('ConfigDI.php');
         self::$container = $builder->build();
     }
