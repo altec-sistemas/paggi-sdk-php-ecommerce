@@ -16,10 +16,10 @@ before_script:
   - phpenv rehash
 
 # Commands you want to run that will verify your build.
-script:  
+script:
   - ./vendor/bin/phpunit --bootstrap vendor/autoload.php tests/*
-  - phpcs --report=summary ./sdk/*
-  - phpcs --report=summary ./tests/*
+  - phpcs --standard=PSR2 --report=summary ./sdk/*
+  - phpcs --standard=PSR2 --report=summary ./tests/*
 
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
