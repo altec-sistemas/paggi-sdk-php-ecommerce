@@ -49,15 +49,6 @@ interface IRestClient
     public function getEndPoint($resource);
 
     /**
-     * Function who verify if the token will expire within one month
-     *
-     * @param [type] $data Token for authentication
-     *
-     * @return string
-     */
-    public function createHeaders(array $data);
-
-    /**
      * Function who will get the endpoint
      *
      * @param array $data dictionary with data to be put in the request`s body
@@ -87,5 +78,5 @@ interface IRestClient
      *
      * @return array
      */
-    public function createRequest($method, $url, $headers = [], $body = []);
+    public function createRequest($method, $url, $body = []);
 }

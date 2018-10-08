@@ -16,6 +16,7 @@ use PHPUnit\Framework\TestCase;
 use Paggi\SDK\RestClient;
 use \GuzzleHttp\Psr7;
 use Paggi\SDK\EnvironmentConfiguration;
+use GuzzleHttp\Psr7\StreamWrapper;
 
 /**
  * This class will test the token validation
@@ -60,24 +61,6 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     {
         $target = new RestClient();
         $this->assertEquals($target->getEndpoint("card"), "cards");
-    }
-
-    /**
-     * Function responsible to test "createHeaders" to return true
-     *
-     * @return void
-     */
-    public function testCreateHeaders()
-    {
-        $target = new RestClient();
-        $header = array(
-            "Content-Type"=>"application/json; charset=utf-8"
-        );
-        $client = $target->createHeaders($header);
-        $this->assertEquals(
-            'application/json; charset=utf-8',
-            $client['headers']['Content-Type']
-        );
     }
 
     /**
@@ -149,9 +132,10 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         );
         $body = $target->createBody(
             [
+                "cvv" => "123",
                 "year" => "2022",
-                "month" => "09",
                 "number" => "4123200700046446",
+                "month" => "09",
                 "holder" => "BRUCE WAYNER",
                 "document" => "16123541090"
             ]
@@ -191,7 +175,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         );
         $response = $target->createRequest(
             $method,
-            $url,
+            "https://api.stg.paggi.com/v1/banks",
             $headers,
             $body
         );

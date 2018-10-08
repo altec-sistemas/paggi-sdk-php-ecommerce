@@ -13,6 +13,13 @@ return [
         return new \Doctrine\Common\Inflector\Inflector();
     },
     'GuzzleClient'=> function (ContainerInterface $c) {
-        return new \GuzzleHttp\Client();
+        return new \GuzzleHttp\Client(
+            [
+                "headers" =>[
+                    "Content-Type" => "application/json",
+                    "Authorization" => "bearer " . getenv("ENVTOKEN")
+                ]
+            ]
+        );
     }
 ];

@@ -16,7 +16,7 @@
  use Paggi\SDK\EnvironmentConfiguration;
  use Paggi\SDK\Interfaces\IRestClient;
  use Doctrine\Common\Inflector\Inflector;
- use function GuzzleHttp\Promise\exception_for;
+ use GuzzleHttp\Psr7\Request;
 
  /**
   * This class verify the RestClient
@@ -109,7 +109,7 @@ class RestClient implements IRestClient
         foreach ($data as $key => $value) {
             $headers = array_merge($headers, array($key => $value));
         }
-        return (empty($headers) ? [] : ["headers"=>$headers]);
+        return (empty($headers) ? [] : $headers);
     }
 
     /**
@@ -121,7 +121,7 @@ class RestClient implements IRestClient
      */
     public function createBody($data = [])
     {
-        return (empty($data) ? [] : ["json"=>$data]);
+        return (empty($data) ? [] : $data);
     }
 
     /**
@@ -165,27 +165,22 @@ class RestClient implements IRestClient
      *
      * @return array
      */
-    public function createRequest($method, $url, $headers = [], $body = [])
+    public function createRequest($method, $url, $body = [])
     {
         $client = self::$container->get("GuzzleClient");
         if (in_array($method, ["GET", "DELETE"])) {
             $response = $client->request(
                 $method,
-                $url,
-                $headers
+                $url
             );
             return $response;
         }
+        $body = json_encode($body);
         $response = $client->request(
             $method,
             $url,
-            ["http_errors" => false],
-            $headers,
-            json_encode($body)
+            ['body' => $body]
         );
-        var_dump(json_encode($body));
-        var_dump($response->getBody()->getContents());
-
         return $response;
     }
 }
