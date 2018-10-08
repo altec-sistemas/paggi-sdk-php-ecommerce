@@ -74,7 +74,6 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             "Content-Type"=>"application/json; charset=utf-8"
         );
         $client = $target->createHeaders($header);
-        var_dump($client);
         $this->assertEquals(
             'application/json; charset=utf-8',
             $client['headers']['Content-Type']
@@ -131,7 +130,46 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($client->getStatusCode(), 200);
     }
 
-    public function testIntegration()
+    public function testIntegrationPost()
+    {
+        $envConf = new EnvironmentConfiguration();
+        $envConf->setPartnerIdByPartnerId(getenv("PARTNERID"));
+        $target = new RestClient();
+        $env = $target->getEnvironment();
+        $method = $target->setMethod("post");
+        $endPoint = $target->getEndPoint("card");
+        $headers = $target->createHeaders(
+            [
+                "headers" =>
+                [
+                    "Content-Type" => "application/json",
+                    "Authorization" => "bearer " . getenv("ENVTOKEN")
+                ]
+            ]
+        );
+        $body = $target->createBody(
+            [
+                "year" => "2022",
+                "month" => "09",
+                "number" => "4123200700046446",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090"
+            ]
+        );
+        $url = $target->mountUrl(
+            $endPoint,
+            $env
+        );
+        $response = $target->createRequest(
+            $method,
+            $url,
+            $headers,
+            $body
+        );
+        $this->assertEquals($response->getStatusCode(), 201);
+    }
+
+    public function testIntegrationGet()
     {
         $target = new RestClient();
         $env = $target->getEnvironment();
