@@ -16,6 +16,7 @@
  use Paggi\SDK\EnvironmentConfiguration;
  use Paggi\SDK\Interfaces\IRestClient;
  use Doctrine\Common\Inflector\Inflector;
+ use function GuzzleHttp\Promise\exception_for;
 
  /**
   * This class verify the RestClient
@@ -31,6 +32,8 @@
 class RestClient implements IRestClient
 {
     private static $container;
+    private static $prefixUrl = "https://api-ecommerce.";
+    private static $suffixUrl = "paggi.com/v1/";
 
     public function __construct()
     {
@@ -118,11 +121,7 @@ class RestClient implements IRestClient
      */
     public function createBody($data = [])
     {
-        $body = array();
-        foreach ($data as $key => $value) {
-            $body = array_merge($body, array($key => $value));
-        }
-        return (empty($body) ? [] : ["body"=>$body]);
+        return (empty($data) ? [] : ["json"=>$data]);
     }
 
     /**
@@ -137,9 +136,9 @@ class RestClient implements IRestClient
     public function mountUrl($endPoint, $env, $parameters = [])
     {
         $envConfigure = self::$container->get('EnvironmentConfiguration');
-        $url = "https://api.";
+        $url =  self::$prefixUrl;
         $url .= !strcmp($env, "Staging") ? "stg.": "";
-        $url .= "paggi.com/v1/";
+        $url .= self::$suffixUrl;
         $url .= (strcmp($endPoint, "banks"))
                 ? "partners/" . $envConfigure->getPartnerId() . "/"
                 : "";
@@ -180,9 +179,13 @@ class RestClient implements IRestClient
         $response = $client->request(
             $method,
             $url,
+            ["http_errors" => false],
             $headers,
-            $body
+            json_encode($body)
         );
+        var_dump(json_encode($body));
+        var_dump($response->getBody()->getContents());
+
         return $response;
     }
 }
