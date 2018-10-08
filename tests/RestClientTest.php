@@ -15,6 +15,7 @@ namespace Paggi\Tests;
 use PHPUnit\Framework\TestCase;
 use Paggi\SDK\RestClient;
 use \GuzzleHttp\Psr7;
+use Paggi\SDK\EnvironmentConfiguration;
 
 /**
  * This class will test the token validation
@@ -58,7 +59,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testSetEndpoint()
     {
         $target = new RestClient();
-        $this->assertEquals($target->setEndpoint("card"), "cards");
+        $this->assertEquals($target->getEndpoint("card"), "cards");
     }
 
     /**
@@ -69,10 +70,14 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testCreateHeaders()
     {
         $target = new RestClient();
-        $client = $target->createHeaders();
+        $header = array(
+            "Content-Type"=>"application/json; charset=utf-8"
+        );
+        $client = $target->createHeaders($header);
+        var_dump($client);
         $this->assertEquals(
             'application/json; charset=utf-8',
-            $client->getHeader('Content-Type')[0]
+            $client['headers']['Content-Type']
         );
     }
 
@@ -84,8 +89,8 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testCreateBody()
     {
         $target = new RestClient();
-        $body = $target->createBody();
-        $this->assertArrayHasKey('data', $body);
+        $body = $target->createBody(["body"=>"aaa"]);
+        $this->assertArrayHasKey("body", $body);
     }
 
     /**
@@ -96,8 +101,16 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testMountUrl()
     {
+        $partner = new EnvironmentConfiguration();
+        $partner->setPartnerIdByPartnerId(getenv('PARTNERID'));
         $target = new RestClient();
-        $this->assertRegex('/\.paggi\.com\/v1\/partners\//', $target->getMountUrl());
+        $this->assertRegexp(
+            '/.*\.paggi\.com\/v1\/partners\/.*/',
+            $target->MountUrl(
+                "cards",
+                "Stage"
+            )
+        );
     }
 
     /**
@@ -108,8 +121,42 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testCreateRequest()
     {
         $target = new RestClient();
-        $client = $target->createRequest();
-        var_dump($client->getBody());
-        $this->assertTrue($client->getBody());
+        $client = $target->createRequest(
+            "GET",
+            "https://api.stg.paggi.com/v1/banks",
+            [
+                "headers" => ["Content-Type" => "application/json"]
+            ]
+        );
+        $this->assertEquals($client->getStatusCode(), 200);
+    }
+
+    public function testIntegration()
+    {
+        $target = new RestClient();
+        $env = $target->getEnvironment();
+        $method = $target->setMethod("Get");
+        $endPoint = $target->getEndPoint("bank");
+        $headers = $target->createHeaders(
+            [
+                "headers" => ["Content-Type" => "application/json"]
+            ]
+        );
+        $body = $target->createBody();
+        $url = $target->mountUrl(
+            $endPoint,
+            $env,
+            [
+                "start"=>0,
+                "count"=>5
+            ]
+        );
+        $response = $target->createRequest(
+            $method,
+            $url,
+            $headers,
+            $body
+        );
+        $this->assertEquals($response->getStatusCode(), 200);
     }
 }
