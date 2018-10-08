@@ -26,7 +26,7 @@ interface IRestClient
     /**
      * Function who will get the environment configuration
      *
-     * @return boolean
+     * @return string
      */
     public function getEnvironment();
 
@@ -35,7 +35,7 @@ interface IRestClient
      *
      * @param string $method Método HTTP
      *
-     * @return boolean
+     * @return string
      */
     public function setMethod($method);
 
@@ -44,44 +44,48 @@ interface IRestClient
      *
      * @param string $resource Name who will be transformed in the endpoint
      *
-     * @return void
+     * @return string
      */
-    public function setEndPoint($resource);
+    public function getEndPoint($resource);
 
     /**
      * Function who verify if the token will expire within one month
      *
      * @param [type] $data Token for authentication
      *
-     * @return boolean
+     * @return string
      */
-    public function createHeaders($data);
+    public function createHeaders(array $data);
 
     /**
      * Function who will get the endpoint
      *
      * @param array $data dictionary with data to be put in the request`s body
      *
-     * @return boolean
+     * @return string
      */
-    public function createBody($data);
+    public function createBody($data = []);
 
     /**
-     * Function who will get the endpoint
+     * Function who will mount the request url
      *
      * @param string $endpoint   Token for authentication
+     * @param string $env        String with the environment
      * @param array  $parameters Parameters for url
      *
-     * @return boolean
+     * @return string
      */
-    public function mountUrl($endpoint, $parameters = []);
+    public function mountUrl($endpoint, $env, $parameters = []);
 
     /**
      * Function who create a request
      *
-     * @param string $initialToken Token for authentication
+     * @param string #method   Method used in the request
+     * @param string $url      URL for request
+     * @param array  $headers  Headers of the request
+     * @param array  $body     Body for the request
      *
-     * @return boolean
+     * @return array
      */
-    public function createRequest($initialToken);
+    public function createRequest($method, $url, $headers = [], $body = []);
 }

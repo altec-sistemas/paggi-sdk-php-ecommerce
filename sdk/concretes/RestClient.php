@@ -30,11 +30,7 @@
   */
 class RestClient implements IRestClient
 {
-    private static $env;
     private static $container;
-    private static $method;
-    private static $endPoint;
-    private static $headers;
 
     public function __construct()
     {
@@ -45,14 +41,14 @@ class RestClient implements IRestClient
     /**
      * Function who will get the environment configuration
      *
-     * @return boolean
+     * @return string
      */
     public function getEnvironment()
     {
-        $EnvironmentConfigurator = self::$container->get('EnvironmentConfiguration');
-        self::$env = $EnvironmentConfigurator->isStaging();
-        if (isset(self::$env) && !is_null(self::$env) && !empty(self::$env)) {
-            return self::$env ? "Stage" : "Production";
+        $envConfigure = self::$container->get('EnvironmentConfiguration');
+        $env = $envConfigure->isStaging();
+        if (isset($env) && !is_null($env) && !empty($env)) {
+            return $env ? "Stage" : "Production";
         }
         return "Não foi possível localizar o environment";
     }
@@ -62,7 +58,7 @@ class RestClient implements IRestClient
      *
      * @param string $method Método HTTP
      *
-     * @return boolean
+     * @return string
      */
     public function setMethod($method)
     {
@@ -72,9 +68,9 @@ class RestClient implements IRestClient
             "PUT",
             "DELETE"
         );
-        self::$method = in_array(strtoupper($method), $Possiveis)
-                        ? strtoupper($method) : "";
-        return self::$method;
+        $method = in_array(strtoupper($method), $Possiveis)
+                ? strtoupper($method) : "";
+        return $method;
     }
 
     /**
@@ -82,13 +78,19 @@ class RestClient implements IRestClient
      *
      * @param string $resource Name who will be transformed in the endpoint
      *
-     * @return void
+     * @return string
      */
-    public function setEndPoint($resource)
+    public function getEndPoint($resource)
     {
         $inflector = self::$container->get('Inflector');
-        self::$endPoint = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $inflector->pluralize($resource)));
-        return self::$endPoint;
+        $endPoint = strtolower(
+            preg_replace(
+                '/(?<!^)[A-Z]/',
+                '_$0',
+                $inflector->pluralize($resource)
+            )
+        );
+        return $endPoint;
     }
 
     /**
@@ -96,18 +98,15 @@ class RestClient implements IRestClient
      *
      * @param array $data Array with itens to be added to headers
      *
-     * @return boolean
+     * @return string
      */
-    public function createHeaders($data)
+    public function createHeaders(array $data)
     {
-        $headers = array();
+        $headers = [];
         foreach ($data as $key => $value) {
-            if (array_key_exists($key, $headers)) {
-                array_push($header, [$key => $value]);
-            }
+            $headers = array_merge($headers, array($key => $value));
         }
-        self::$header = $headers;
-        return self::$header;
+        return (empty($headers) ? [] : ["headers"=>$headers]);
     }
 
     /**
@@ -115,32 +114,75 @@ class RestClient implements IRestClient
      *
      * @param array $data dictionary with data to be put in the request`s body
      *
-     * @return boolean
+     * @return string
      */
-    public function createBody($data)
+    public function createBody($data = [])
     {
+        $body = array();
+        foreach ($data as $key => $value) {
+            $body = array_merge($body, array($key => $value));
+        }
+        return (empty($body) ? [] : ["body"=>$body]);
     }
 
     /**
-     * Function who will get the endpoint
+     * Function who will mount the request url
      *
      * @param string $endpoint   Token for authentication
+     * @param string $env        String with the environment
      * @param array  $parameters Parameters for url
      *
-     * @return boolean
+     * @return string
      */
-    public function mountUrl($endpoint, $parameters = [])
+    public function mountUrl($endPoint, $env, $parameters = [])
     {
+        $envConfigure = self::$container->get('EnvironmentConfiguration');
+        $url = "https://api.";
+        $url .= !strcmp($env, "Stage") ? "stg.": "";
+        $url .= "paggi.com/v1/";
+        $url .= (strcmp($endPoint, "banks"))
+                ? "partners/" . $envConfigure->getPartnerId() . "/"
+                : "";
+        $url .= $endPoint;
+        if (!empty($parameters)) {
+            $url .= "?";
+            $local = "";
+            foreach ($parameters as $key => $value) {
+                $local = $key . "=" . $value;
+                $local .= "&";
+            }
+            $url .= substr($local, 0, -1);
+        }
+        return $url;
     }
 
     /**
      * Function who create a request
      *
-     * @param string $initialToken Token for authentication
+     * @param string #method   Method used in the request
+     * @param string $url      URL for request
+     * @param array  $headers  Headers of the request
+     * @param array  $body     Body for the request
      *
-     * @return boolean
+     * @return array
      */
-    public function createRequest($initialToken)
+    public function createRequest($method, $url, $headers = [], $body = [])
     {
+        $client = self::$container->get("GuzzleClient");
+        if (in_array($method, ["GET", "DELETE"])) {
+            $response = $client->request(
+                $method,
+                $url,
+                $headers
+            );
+            return $response;
+        }
+        $response = $client->request(
+            $method,
+            $url,
+            $headers,
+            $body
+        );
+        return $response;
     }
 }
