@@ -48,7 +48,7 @@ class RestClient implements IRestClient
         $envConfigure = self::$container->get('EnvironmentConfiguration');
         $env = $envConfigure->isStaging();
         if (isset($env) && !is_null($env) && !empty($env)) {
-            return $env ? "Stage" : "Production";
+            return $env ? "Staging" : "Production";
         }
         return "Não foi possível localizar o environment";
     }
@@ -138,7 +138,7 @@ class RestClient implements IRestClient
     {
         $envConfigure = self::$container->get('EnvironmentConfiguration');
         $url = "https://api.";
-        $url .= !strcmp($env, "Stage") ? "stg.": "";
+        $url .= !strcmp($env, "Staging") ? "stg.": "";
         $url .= "paggi.com/v1/";
         $url .= (strcmp($endPoint, "banks"))
                 ? "partners/" . $envConfigure->getPartnerId() . "/"

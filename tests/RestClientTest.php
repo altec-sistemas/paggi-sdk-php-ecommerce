@@ -108,7 +108,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             '/.*\.paggi\.com\/v1\/partners\/.*/',
             $target->MountUrl(
                 "cards",
-                "Stage"
+                "Staging"
             )
         );
     }
