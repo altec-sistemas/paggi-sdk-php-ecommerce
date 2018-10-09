@@ -9,6 +9,9 @@ return [
     'EnvironmentConfiguration' => function (ContainerInterface $c) {
         return new \Paggi\SDK\EnvironmentConfiguration();
     },
+    'RestClient'=> function (ContainerInterface $c) {
+        return new \Paggi\SDK\RestClient();
+    },
     'Inflector' => function (ContainerInterface $c) {
         return new \Doctrine\Common\Inflector\Inflector();
     },
