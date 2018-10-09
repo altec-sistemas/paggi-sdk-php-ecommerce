@@ -13,8 +13,6 @@
 
  namespace Paggi\SDK;
 
-require('vendor/autoload.php');
-
  use Paggi\SDK\EnvironmentConfiguration;
  use Paggi\SDK\Interfaces\IRestClient;
  use Doctrine\Common\Inflector\Inflector;
