@@ -27,16 +27,6 @@ use Paggi\SDK\EnvironmentConfiguration;
  */
 class RestClientTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Function responsible to test "getEnvironment" to return true
-     *
-     * @return void
-     */
-    public function testGetEnvironment()
-    {
-        $target = new RestClient();
-        $this->assertTrue(is_string($target->getEnvironment()));
-    }
 
     /**
      * Function responsible for test the "getEndpoint"function
@@ -81,14 +71,15 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testMountUrl()
     {
-        $partner = new EnvironmentConfiguration();
-        $partner->setPartnerIdByPartnerId(getenv('PARTNERID'));
+        $env = new EnvironmentConfiguration();
+        $env->setPartnerIdByPartnerId(getenv('PARTNERID'));
         $target = new RestClient();
         $this->assertRegexp(
             '/.*\.paggi\.com\/v1\/partners\/.*/',
             $target->MountUrl(
                 "cards",
-                "Staging"
+                "Staging",
+                $env->getPartnerId()
             )
         );
     }
@@ -115,8 +106,9 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     {
         $envConf = new EnvironmentConfiguration();
         $envConf->setPartnerIdByPartnerId(getenv("PARTNERID"));
+        $id = $envConf->getPartnerId();
         $target = new RestClient();
-        $env = $target->getEnvironment();
+        $env = "Staging";
         $method = $target->setMethod("post");
         $endPoint = $target->getEndPoint("card");
         $headers = $target->createHeaders(
@@ -128,7 +120,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             [
                 "cvv" => "123",
                 "year" => "2022",
-                "number" => "4123200700046446",
+                "number" => "4123200444046446",
                 "month" => "09",
                 "holder" => "BRUCE WAYNER",
                 "document" => "16123541090"
@@ -136,7 +128,8 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         );
         $url = $target->mountUrl(
             $endPoint,
-            $env
+            $env,
+            $envConf->getPartnerId()
         );
         $response = $target->createRequest(
             $method,
@@ -149,8 +142,11 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 
     public function testIntegrationGet()
     {
+        $envConf = new EnvironmentConfiguration();
+        $envConf->setPartnerIdByPartnerId(getenv("PARTNERID"));
+        $id = $envConf->getPartnerId();
         $target = new RestClient();
-        $env = $target->getEnvironment();
+        $env = "Staging";
         $method = $target->setMethod("Get");
         $endPoint = $target->getEndPoint("bank");
         $headers = $target->createHeaders(
@@ -162,6 +158,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $url = $target->mountUrl(
             $endPoint,
             $env,
+            $id,
             [
                 "start"=>0,
                 "count"=>5

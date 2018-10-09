@@ -40,20 +40,6 @@ class RestClient implements IRestClient
         $builder->addDefinitions('ConfigDI.php');
         self::$container = $builder->build();
     }
-    /**
-     * Function who will get the environment configuration
-     *
-     * @return string
-     */
-    public function getEnvironment()
-    {
-        $envConfigure = self::$container->get('EnvironmentConfiguration');
-        $env = $envConfigure->isStaging();
-        if (isset($env) && !is_null($env) && !empty($env)) {
-            return $env ? "Staging" : "Production";
-        }
-        return "Não foi possível localizar o environment";
-    }
 
     /**
      * Function who will set the HTTP method
@@ -64,13 +50,13 @@ class RestClient implements IRestClient
      */
     public function setMethod($method)
     {
-        $Possiveis = array(
+        $possible = array(
             "GET",
             "POST",
             "PUT",
             "DELETE"
         );
-        $method = in_array(strtoupper($method), $Possiveis)
+        $method = in_array(strtoupper($method), $possible)
                 ? strtoupper($method) : "";
         return $method;
     }
@@ -132,14 +118,13 @@ class RestClient implements IRestClient
      *
      * @return string
      */
-    public function mountUrl($endPoint, $env, $parameters = [])
+    public function mountUrl($endPoint, $env, $id, $parameters = [])
     {
-        $envConfigure = self::$container->get('EnvironmentConfiguration');
         $url =  self::$prefixUrl;
         $url .= !strcmp($env, "Staging") ? "stg.": "";
         $url .= self::$suffixUrl;
         $url .= (strcmp($endPoint, "banks"))
-                ? "partners/" . $envConfigure->getPartnerId() . "/"
+                ? "partners/" . $id . "/"
                 : "";
         $url .= $endPoint;
         if (!empty($parameters)) {

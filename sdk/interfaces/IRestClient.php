@@ -24,13 +24,6 @@ namespace Paggi\SDK\Interfaces;
 interface IRestClient
 {
     /**
-     * Function who will get the environment configuration
-     *
-     * @return string
-     */
-    public function getEnvironment();
-
-    /**
      * Function who will set the HTTP method
      *
      * @param string $method Método HTTP
@@ -66,7 +59,7 @@ interface IRestClient
      *
      * @return string
      */
-    public function mountUrl($endpoint, $env, $parameters = []);
+    public function mountUrl($endpoint, $env, $id, $parameters = []);
 
     /**
      * Function who create a request
