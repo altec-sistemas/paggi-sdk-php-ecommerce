@@ -14,9 +14,7 @@ namespace Paggi\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Paggi\SDK\RestClient;
-use \GuzzleHttp\Psr7;
 use Paggi\SDK\EnvironmentConfiguration;
-use GuzzleHttp\Psr7\StreamWrapper;
 
 /**
  * This class will test the token validation
@@ -123,11 +121,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $endPoint = $target->getEndPoint("card");
         $headers = $target->createHeaders(
             [
-                "headers" =>
-                [
-                    "Content-Type" => "application/json",
-                    "Authorization" => "bearer " . getenv("ENVTOKEN")
-                ]
+                "Authorization" => "bearer " . getenv("ENVTOKEN")
             ]
         );
         $body = $target->createBody(

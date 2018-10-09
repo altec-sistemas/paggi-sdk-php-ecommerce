@@ -78,5 +78,5 @@ interface IRestClient
      *
      * @return array
      */
-    public function createRequest($method, $url, $body = []);
+    public function createRequest($method, $url, $headers = [], $body = []);
 }

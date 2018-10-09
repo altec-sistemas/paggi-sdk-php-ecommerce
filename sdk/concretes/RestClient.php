@@ -13,10 +13,11 @@
 
  namespace Paggi\SDK;
 
+require('vendor/autoload.php');
+
  use Paggi\SDK\EnvironmentConfiguration;
  use Paggi\SDK\Interfaces\IRestClient;
  use Doctrine\Common\Inflector\Inflector;
- use GuzzleHttp\Psr7\Request;
 
  /**
   * This class verify the RestClient
@@ -165,22 +166,18 @@ class RestClient implements IRestClient
      *
      * @return array
      */
-    public function createRequest($method, $url, $body = [])
+    public function createRequest($method, $url, $headers = [], $body = [])
     {
-        $client = self::$container->get("GuzzleClient");
-        if (in_array($method, ["GET", "DELETE"])) {
-            $response = $client->request(
-                $method,
-                $url
-            );
-            return $response;
-        }
-        $body = json_encode($body);
-        $response = $client->request(
+        $client = self::$container->get('HttpClient');
+        $request = $client->createRequest(
             $method,
             $url,
-            ['body' => $body]
+            [
+                "headers"=> $headers,
+                "json"=> $body
+            ]
         );
+        $response = $client->send($request);
         return $response;
     }
 }
