@@ -67,7 +67,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
      *
      * @return string
      */
-    public function setStaging($environmentStatus)
+    public function setEnv($environmentStatus)
     {
         $possible = array(
             "STAGING",

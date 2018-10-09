@@ -39,7 +39,7 @@ interface IEnvironmentConfiguration
      *
      * @return boolean
      */
-    public function setStaging($environmentStatus);
+    public function setEnv($environmentStatus);
 
     /**
      * public function who will set the setPartnerIdByToken
