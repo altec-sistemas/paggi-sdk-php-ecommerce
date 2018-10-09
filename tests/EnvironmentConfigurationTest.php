@@ -56,10 +56,10 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSetStagingTrue()
+    public function testSetStaging()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertTrue($target->setStaging(true));
+        $this->assertEquals($target->setStaging("Staging"), "Staging");
     }
 
     /**
@@ -67,10 +67,10 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testSetStagingFalse()
+    public function testSetStagingProd()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertFalse($target->setStaging("teste"));
+        $this->assertEquals($target->setStaging("prod"), "Prod");
     }
 
 
@@ -119,14 +119,20 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Function responsible to test "isStaging"
+     * Function responsible to test "getEnv"
      *
      * @return void
      */
-    public function testIsStaging()
+    public function testGetStaging()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertTrue($target->isStaging());
+        $target->setStaging("Staging");
+        $possible = array(
+            "Staging",
+            "Prod",
+            "O tipo de ambiente só pode ser Staging ou Prod"
+        );
+        $this->assertTrue(in_array($target->getEnv(), $possible));
     }
 
 

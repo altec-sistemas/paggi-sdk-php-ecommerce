@@ -33,7 +33,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
 {
     private static $token = null;
     private static $partnerId = null;
-    private static $environment = true;
+    private static $environment;
     private static $container;
 
     public function __construct()
@@ -63,18 +63,21 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     /**
      * Function who will set the environment
      *
-     * @param boolean $environmentStatus true if staging
+     * @param string $environmentStatus true if staging
      *
-     * @return boolean
+     * @return string
      */
     public function setStaging($environmentStatus)
     {
-        if (is_bool($environmentStatus)) {
-            self::$environment = $environmentStatus;
-
-            return true;
+        $possible = array(
+            "STAGING",
+            "PROD"
+        );
+        if (in_array(strtoupper($environmentStatus), $possible)) {
+            self::$environment = ucfirst(strtolower($environmentStatus));
+            return self::$environment;
         }
-        return false;
+        return "O tipo de ambiente só pode ser Staging ou Prod";
     }
 
     /**
@@ -132,7 +135,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
      *
      * @return boolean
      */
-    public function isStaging()
+    public function getEnv()
     {
         return self::$environment;
     }

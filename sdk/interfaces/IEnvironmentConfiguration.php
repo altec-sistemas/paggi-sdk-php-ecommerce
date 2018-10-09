@@ -71,7 +71,7 @@ interface IEnvironmentConfiguration
      *
      * @return boolean
      */
-    public function isStaging();
+    public function getEnv();
 
     /**
      * public function who gets the Partner's id
