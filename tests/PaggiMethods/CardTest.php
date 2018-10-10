@@ -26,7 +26,6 @@ use Paggi\SDK;
  */
 class CardTest extends \PHPUnit_Framework_TestCase
 {
-    private static $token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJQQUdHSSIsImV4cCI6NjIwMTkxMjQ2NTIsImlhdCI6MTUzOTEyNDY1MiwiaXNzIjoiUEFHR0kiLCJqdGkiOiI0MDNhMmE2ZS05NTcyLTQ2NWUtYWVlOC01MzkyZDA1MmMzNmQiLCJuYmYiOjE1MzkxMjQ2NTEsInBlcm1pc3Npb25zIjpbeyJwYXJ0bmVyX2lkIjoiMmE0YmFkNGQtNjkxNS00ODE3LTgyMWItZGUyOTA5MzdhM2M4IiwicGVybWlzc2lvbnMiOlsic3lzdGVtX3VzZXIiXX1dLCJzdWIiOiI5YzAxZGM3Mi1lMjg1LTRhMGUtOTZjOS02MGE5OGI2NzJjM2YiLCJ0eXAiOiJhY2Nlc3MifQ.AwCnCL8saJ3pBAiYpeVashWbbkAAhsPfn2TpMJZSnFEW902VwnOjRRcA9DfTwGWBMGZwfB0pMY-S42iOX1oGGA";
     /**
      * Function responsible to test "createCard"
      *
@@ -37,11 +36,9 @@ class CardTest extends \PHPUnit_Framework_TestCase
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $target = new \Paggi\SDK\Card();
         $envConfiguration->setEnv("Staging");
-        $envConfiguration->setToken(self::$token);
-        $envConfiguration->setPartnerIdByToken(self::$token);
-        //$envConfiguration->setToken(getenv("ENVTOKEN"));
-        //$envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
-        $card =
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+        $cardParams =
         [
             "cvv" => "123",
             "year" => "2022",
@@ -50,11 +47,11 @@ class CardTest extends \PHPUnit_Framework_TestCase
             "holder" => "BRUCE WAYNER",
             "document" => "16123541090"
         ];
-        $response = $target->create($card);
-        $responseId = json_decode($response->getBody()->getContents(), true)['id'];
+        $card = $target->create($cardParams);
+        var_dump($card);
         $this->assertRegexp(
             "/\w+-*/",
-            $responseId
+            $card-> id
         );
     }
 
@@ -68,9 +65,9 @@ class CardTest extends \PHPUnit_Framework_TestCase
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $target = new \Paggi\SDK\Card();
         $envConfiguration->setEnv("Staging");
-        $envConfiguration->setToken(self::$token);
-        $envConfiguration->setPartnerIdByToken(self::$token);
-        $cardComponents =
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+        $cardParams =
         [
             "cvv" => "123",
             "year" => "2022",
@@ -79,9 +76,8 @@ class CardTest extends \PHPUnit_Framework_TestCase
             "holder" => "BRUCE WAYNER",
             "document" => "16123541090"
         ];
-        $card = $target->create($cardComponents);
-        $cardId = json_decode($card->getBody()->getContents(), true)['id'];
-        $response = $target->delete($cardId);
+        $card = $target->create($cardParams);
+        $response = $card->delete($card->id);
         $this->assertEquals($response->getStatusCode(), 204);
     }
 
@@ -92,9 +88,13 @@ class CardTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteCardFailed()
     {
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $target = new \Paggi\SDK\Card();
-        $cardId = "22ae0069-0b68-44db-9d8b-b855c796312d";
-        $response = $target->delete($card);
+        $envConfiguration->setEnv("Staging");
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+        $cardId = "22ae0069-0b68-0000-9d8b-b855c796312d";
+        $response = $target->delete($cardId);
         $this->assertEquals($response->getStatusCode(), 404);
     }
 }

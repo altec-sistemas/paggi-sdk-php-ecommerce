@@ -13,7 +13,6 @@
 namespace Paggi\SDK\Traits;
 
 use \Paggi\SDK\RestClient;
-use \Paggi\SDK\Util;
 
 /**
  * Trait Delete - Delete/Delete a new resource
@@ -29,18 +28,14 @@ trait Delete
     /**
      * DELETE METHOD
      *
-     * @param $params Resource paramns
+     * @param $id Resource paramns
      *
      * @return boolean Result of the deletion
      */
-    public static function delete()
+    public static function delete($id)
     {
         $class = new \ReflectionClass(self::class);
-        $util = self::$container->get("Util");
-        if ($this->id === null) {
-            return "Error";
-        }
-        $response = $util->makeRequest($class, "Delete", [], $this->$id);
-        return "Error";
+
+        return self::makeRequest($class, "Delete", [], $id);
     }
 }
