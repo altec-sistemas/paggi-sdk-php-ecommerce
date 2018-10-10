@@ -27,7 +27,7 @@ trait Util
 {
     private static $container;
 
-    public static function makeRequest($class, $method, $params = [], $id = "", $capture = "")
+    public static function makeRequest($class, $method, $bodyParams = [], $urlParams = [], $id = "", $capture = "")
     {
         $builder = new \DI\ContainerBuilder();
         $builder->addDefinitions('ConfigDI.php');
@@ -47,8 +47,9 @@ trait Util
                 "Authorization" => "Bearer " . $token
             ]
         );
-        $body = $restClient->createBody($params);
-        $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $params, $capture);
+        $body = $restClient->createBody($bodyParams);
+        $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $urlParams, $capture);
+        var_dump($url);
         $response = $restClient->createRequest(
             $method,
             $url,

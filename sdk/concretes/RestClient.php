@@ -155,6 +155,7 @@ class RestClient implements IRestClient
     {
         $client = self::$container->get('HttpClient');
         $client->setDefaultOption('exceptions', false);
+        var_dump($body);
         $request = $client->createRequest(
             $method,
             $url,

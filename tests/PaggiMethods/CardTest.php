@@ -48,7 +48,6 @@ class CardTest extends \PHPUnit_Framework_TestCase
             "document" => "16123541090"
         ];
         $card = $target->create($cardParams);
-        var_dump($card);
         $this->assertRegexp(
             "/\w+-*/",
             $card-> id

@@ -36,6 +36,6 @@ trait Delete
     {
         $class = new \ReflectionClass(self::class);
 
-        return self::makeRequest($class, "Delete", [], $id);
+        return self::makeRequest($class, "Delete", [], [], $id);
     }
 }

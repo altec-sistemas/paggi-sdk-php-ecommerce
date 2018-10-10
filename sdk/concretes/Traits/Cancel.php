@@ -13,7 +13,6 @@
 namespace Paggi\SDK\Traits;
 
 use \Paggi\SDK\RestClient;
-use \Paggi\SDK\Util;
 
 /**
  * Trait Capture - Capture all of a given resoure or find by ID

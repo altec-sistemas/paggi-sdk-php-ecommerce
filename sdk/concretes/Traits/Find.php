@@ -16,7 +16,7 @@ use \Paggi\SDK\RestClient;
 use \Paggi\SDK\Util;
 
 /**
- * Trait Find - Find all of a given resoure or find by ID
+ * Trait Find - Find all of a given resource or find by ID
  *
  * @category Create_Test_Class
  * @package  Paggi
