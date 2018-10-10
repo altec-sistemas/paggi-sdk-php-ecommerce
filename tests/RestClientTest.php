@@ -79,7 +79,10 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             $target->MountUrl(
                 "cards",
                 "Staging",
-                $env->getPartnerId()
+                $env->getPartnerId(),
+                "",
+                [],
+                ""
             )
         );
     }
@@ -105,7 +108,9 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testIntegrationPost()
     {
         $envConf = new EnvironmentConfiguration();
+        $envConf->setToken(getenv("ENVTOKEN"));
         $envConf->setPartnerIdByPartnerId(getenv("PARTNERID"));
+        $token = $envConf->getToken();
         $id = $envConf->getPartnerId();
         $target = new RestClient();
         $env = "Staging";
@@ -113,7 +118,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $endPoint = $target->getEndPoint("card");
         $headers = $target->createHeaders(
             [
-                "Authorization" => "bearer " . getenv("ENVTOKEN")
+                "Authorization" => "Bearer " . $token
             ]
         );
         $body = $target->createBody(
@@ -159,10 +164,12 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             $endPoint,
             $env,
             $id,
+            "",
             [
                 "start"=>0,
                 "count"=>5
-            ]
+            ],
+            ""
         );
         $response = $target->createRequest(
             $method,

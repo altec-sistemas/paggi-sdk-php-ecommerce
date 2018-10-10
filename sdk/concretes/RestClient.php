@@ -31,7 +31,7 @@
 class RestClient implements IRestClient
 {
     private static $container;
-    private static $prefixUrl = "https://api-ecommerce.";
+    private static $prefixUrl = "https://api.";
     private static $suffixUrl = "paggi.com/v1/";
 
     public function __construct()
@@ -118,7 +118,7 @@ class RestClient implements IRestClient
      *
      * @return string
      */
-    public function mountUrl($endPoint, $env, $id, $parameters = [])
+    public function mountUrl($endPoint, $env, $id, $objectId = "", $parameters = [], $option = "")
     {
         $url =  self::$prefixUrl;
         $url .= !strcmp($env, "Staging") ? "stg.": "";
@@ -127,6 +127,8 @@ class RestClient implements IRestClient
                 ? "partners/" . $id . "/"
                 : "";
         $url .= $endPoint;
+        $url .= empty($objectId) ? "" : $objectId;
+        $url .= $option;
         if (!empty($parameters)) {
             $url .= "?";
             $local = "";
@@ -152,6 +154,7 @@ class RestClient implements IRestClient
     public function createRequest($method, $url, $headers = [], $body = [])
     {
         $client = self::$container->get('HttpClient');
+        $client->setDefaultOption('exceptions', false);
         $request = $client->createRequest(
             $method,
             $url,
