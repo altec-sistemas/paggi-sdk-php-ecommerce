@@ -127,7 +127,7 @@ class RestClient implements IRestClient
                 ? "partners/" . $id . "/"
                 : "";
         $url .= $endPoint;
-        $url .= empty($objectId) ? "" : $objectId;
+        $url .= empty($objectId) ? "" : "/" . $objectId;
         $url .= $option;
         if (!empty($parameters)) {
             $url .= "?";

@@ -14,6 +14,7 @@
 namespace Paggi\SDK;
 
 use Paggi\SDK\Traits\ResponseManagement;
+use Paggi\SDK\Traits\Util;
 
 /**
  * This method get the response values and set it in to the parameters class
@@ -23,13 +24,14 @@ use Paggi\SDK\Traits\ResponseManagement;
 abstract class DynamicObjectGenerator
 {
     use ResponseManagement;
+    use Util;
 
     /**
      * In this case, $this is the class that called this one.
      *
      * @param $response Array with the response's array.
      * */
-    public function __construct(array $response)
+    public function __construct($response = [])
     {
         foreach ($response as $key => $value) {
             $this->{$key} = $value;

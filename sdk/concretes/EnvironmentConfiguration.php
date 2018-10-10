@@ -55,6 +55,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
         $tokenValidator = self::$container->get('TokenValidation');
         if ($tokenValidator->isValidToken($token)) {
             self::$token = $token;
+            $this->setPartnerIdByToken($token);
             return true;
         }
         return false;
@@ -87,7 +88,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
      *
      * @return boolean
      */
-    public function setPartnerIdByToken($token)
+    public function setPartnerIdByToken($token = "")
     {
         $tokenObj
             = (!isset($token) || is_null($token) || empty($token)) ?
