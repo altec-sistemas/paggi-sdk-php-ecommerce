@@ -10,7 +10,7 @@
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  */
-namespace Paggi\SDK;
+namespace Paggi\SDK\Traits;
 
 use \Paggi\SDK\RestClient;
 
@@ -23,19 +23,16 @@ use \Paggi\SDK\RestClient;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  * */
-class Util
+trait Util
 {
     private static $container;
 
-    public function __construct()
+    public static function makeRequest($class, $method, $params = [], $id = "", $capture = "")
     {
         $builder = new \DI\ContainerBuilder();
         $builder->addDefinitions('ConfigDI.php');
         self::$container = $builder->build();
-    }
 
-    public function makeRequest($class, $method, $params = [], $id = "", $capture = "")
-    {
         $envConfigure = self::$container->get('EnvironmentConfiguration');
         $token = $envConfigure->getToken();
         $partnerId = $envConfigure->getPartnerId();
