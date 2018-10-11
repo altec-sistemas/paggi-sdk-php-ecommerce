@@ -12,9 +12,6 @@ return [
     'RestClient'=> function (ContainerInterface $c) {
         return new \Paggi\SDK\RestClient();
     },
-    'Util'=> function (ContainerInterface $c) {
-        return new \Paggi\SDK\Util();
-    },
     'Inflector' => function (ContainerInterface $c) {
         return new \Doctrine\Common\Inflector\Inflector();
     },
