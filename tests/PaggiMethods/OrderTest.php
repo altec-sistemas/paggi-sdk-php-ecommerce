@@ -33,21 +33,13 @@ class OrderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOneOrderWithCapture()
     {
-        $OrderCreator = new \Paggi\SDK\Order();
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-        $cardCreator = new \Paggi\SDK\Card();
+        $OrderCreator = new \Paggi\SDK\Order();
+
         $envConfiguration->setEnv("Staging");
         $envConfiguration->setToken(getenv("ENVTOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
-        $cardParams =
-        [
-            "cvv" => "123",
-            "year" => "2022",
-            "number" => "4123200700046446",
-            "month" => "09",
-            "holder" => "BRUCE WAYNER",
-            "document" => "16123541090"
-        ];
+
         $charge =
         [
             "amount" => 5000,
@@ -61,7 +53,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
                 "month" => "04",
                 "document" => "16123541090"
             ]
-            ];
+        ];
         $orderParams=
         [
             "external_identifier" => "ABC123",
@@ -73,9 +65,9 @@ class OrderTest extends \PHPUnit_Framework_TestCase
                 "email" => "bruce@waynecorp.com"
             ]
         ];
+
         $response = $OrderCreator->create($orderParams);
-        var_dump($response);
-        $this->assertEquals($response->getStatusCode(), 200);
+        $this->assertRegExp("/captured/", $response->status);
     }
 
     /**
@@ -85,14 +77,43 @@ class OrderTest extends \PHPUnit_Framework_TestCase
      */
     public function testOneOrderWithoutCapture()
     {
-        $target = new \Paggi\SDK\Order();
-        $params =
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $OrderCreator = new \Paggi\SDK\Order();
+        $cardCreator = new \Paggi\SDK\Card();
+
+        $envConfiguration->setEnv("Staging");
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+        $card = $cardCreator->create(
+            [
+                "cvv" => "123",
+                "year" => "2022",
+                "number" => "4485200700046446",
+                "month" => "09",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090"
+            ]
+        );
+        $charge =
         [
-            "start" => 0,
-            "count" => 5
+            "amount" => 5000,
+            "installments" => 10,
+            "card" => ["id"=> $card->id]
         ];
-        $response = $target->find($params);
-        $this->assertEquals($response->getStatusCode(), 200);
+        $orderParams=
+        [
+            "capture" => false,
+            "external_identifier" => "ABC123",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com"
+            ]
+        ];
+        $response = $OrderCreator->create($orderParams);
+        $this->assertRegExp("/authorized/", $response->status);
     }
 
     /**
@@ -100,32 +121,95 @@ class OrderTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testMultipleOrderWithCapture()
+    public function testOneOrderWithoutCaptureAndCapture()
     {
-        $target = new \Paggi\SDK\Order();
-        $params =
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $OrderCreator = new \Paggi\SDK\Order();
+        $cardCreator = new \Paggi\SDK\Card();
+
+        $envConfiguration->setEnv("Staging");
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+
+        $OrderCreator = new \Paggi\SDK\Order();
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $cardCreator = new \Paggi\SDK\Card();
+        $card = $cardCreator->create(
+            [
+                "cvv" => "123",
+                "year" => "2022",
+                "number" => "4485200700046446",
+                "month" => "09",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090"
+            ]
+        );
+        $charge =
         [
-            "start" => 0,
-            "count" => 5
+            "amount" => 5000,
+            "installments" => 10,
+            "card" => ["id"=> $card->id]
         ];
-        $response = $target->find($params);
-        $this->assertEquals($response->getStatusCode(), 200);
+        $orderParams=
+        [
+            "capture" => false,
+            "external_identifier" => "ABC123",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com"
+            ]
+        ];
+        $response = $OrderCreator->create($orderParams);
+        $capture = $response->capture();
+        $this->assertRegExp("/authorized/", $response->status);
     }
 
-    /**
-     * Function responsible to test "deleteOrder" and is expected to return 404
-     *
-     * @return void
-     */
-    public function testOMultipleOrderWithoutCapture()
+    public function testOneOrderWithoutCaptureAndCancel()
     {
-        $target = new \Paggi\SDK\Order();
-        $params =
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $OrderCreator = new \Paggi\SDK\Order();
+        $cardCreator = new \Paggi\SDK\Card();
+
+        $envConfiguration->setEnv("Staging");
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+
+        $OrderCreator = new \Paggi\SDK\Order();
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $cardCreator = new \Paggi\SDK\Card();
+        $card = $cardCreator->create(
+            [
+                "cvv" => "123",
+                "year" => "2022",
+                "number" => "4485200700046446",
+                "month" => "09",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090"
+            ]
+        );
+        $charge =
         [
-            "start" => 0,
-            "count" => 5
+            "amount" => 5000,
+            "installments" => 10,
+            "card" => ["id"=> $card->id]
         ];
-        $response = $target->find($params);
-        $this->assertEquals($response->getStatusCode(), 200);
+        $orderParams=
+        [
+            "capture" => false,
+            "external_identifier" => "ABC123",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com"
+            ]
+        ];
+        $response = $OrderCreator->create($orderParams);
+        $capture = $response->cancel($response->id);
+        $this->assertRegExp("/authorized/", $response->status);
     }
 }

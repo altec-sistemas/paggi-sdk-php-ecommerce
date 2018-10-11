@@ -31,15 +31,16 @@ class BankTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testDeleteBank()
+    public function testGetBank()
     {
-        $target = new \Paggi\SDK\Bank();
-        $params =
-        [
-            "start" => 0,
-            "count" => 5
-        ];
-        $response = $target->find($params);
-        $this->assertEquals($response->getStatusCode(), 200);
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $bankFinder = new \Paggi\SDK\Bank();
+
+        $envConfiguration->setEnv("Staging");
+        $envConfiguration->setToken(getenv("ENVTOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+
+        $banks = $bankFinder->find(["start"=>0, "count"=>20]);
+        $this->assertTrue($banks->count == 20);
     }
 }
