@@ -15,7 +15,7 @@ namespace Paggi\SDK\Traits;
 use \Paggi\SDK\RestClient;
 
 /**
- * Trait Capture - Capture all of a given resoure or find by ID
+ * Trait Capture - Capture all of a given resource or find by ID
  *
  * @category Create_Test_Class
  * @package  Paggi
@@ -23,7 +23,7 @@ use \Paggi\SDK\RestClient;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  * */
-trait Capture
+trait Cancel
 {
     /**
      * GET METHOD
@@ -32,18 +32,10 @@ trait Capture
      * @throws PaggiException Representation of HTTP error code
      * @return mixed Object representing created entity
      */
-    static public function capture($id = "")
+    static public function cancel($id)
     {
         $class = new \ReflectionClass(self::class);
-        $util = self::$container->get("Util");
-        if (!empty($id)) {
-            $response = $util->makeRequest($class, "put", [], $id, "/cancel");
-            return $response;
-        }
-        if ($this->id === null) {
-            return "Error";
-        }
-        $response = $util->makeRequest($class, "put", [], $this->$id, "/cancel");
+        $response = self::makeRequest($class, "put", [], [], $id, "/void");
         return $response;
     }
 }

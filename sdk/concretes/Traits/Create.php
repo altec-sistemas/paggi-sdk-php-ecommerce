@@ -37,7 +37,6 @@ trait Create
     static public function create($params)
     {
         $class = new \ReflectionClass(self::class);
-        //$util = self::$container->get("Util");
         $response = self::makeRequest($class, "Post", $params);
         return self::manageResponse($response);
     }

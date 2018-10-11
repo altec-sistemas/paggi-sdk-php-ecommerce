@@ -35,15 +35,7 @@ trait Capture
     static public function capture($id = "")
     {
         $class = new \ReflectionClass(self::class);
-        $util = self::$container->get("Util");
-        if (!empty($id)) {
-            $response = $util->makeRequest($class, "put", [], $id, "/capture");
-            return $response;
-        }
-        if ($this->id === null) {
-            return "Error";
-        }
-        $response = $util->makeRequest($class, "put", [], $this->$id, "/capture");
+        $response = self::makeRequest($class, "put", [], [], $id, "/capture");
         return $response;
     }
 }

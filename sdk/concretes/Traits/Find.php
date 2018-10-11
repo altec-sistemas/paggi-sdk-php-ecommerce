@@ -13,7 +13,6 @@
 namespace Paggi\SDK\Traits;
 
 use \Paggi\SDK\RestClient;
-use \Paggi\SDK\Util;
 
 /**
  * Trait Find - Find all of a given resource or find by ID
@@ -33,19 +32,14 @@ trait Find
      * @throws PaggiException Representation of HTTP error code
      * @return mixed Object representing created entity
      */
-    static public function find($params, $id = "")
+    static public function find($params = [], $id = "")
     {
         $class = new \ReflectionClass(self::class);
-        $util = self::$container->get("Util");
         if (!empty($id)) {
-            $response = $util->makeRequest($class, "get", $params, $id);
-            return $response;
+            $response = self::makeRequest($class, "get", [], $params, $id);
+            return self::manageResponse($response);
         }
-        if (is_set($this->id)) {
-            $response = $util->makeRequest($class, "get", $params, $this->$id);
-            return $response;
-        }
-        $response = $util->makeRequest($class, "get", $params);
-        return $response;
+        $response = self::makeRequest($class, "get", [], $params);
+        return self::manageResponse($response);
     }
 }
