@@ -39,7 +39,15 @@ interface IRestClient
      *
      * @return string
      */
-    public function getEndPoint($resource);
+    public function getEndPoint($resource);/**
+
+    * Function who verify if the token will expire within one month
+    *
+    * @param array $data Array with itens to be added to headers
+    *
+    * @return string
+    */
+    public function createHeaders(array $data);
 
     /**
      * Function who will get the endpoint
@@ -59,7 +67,7 @@ interface IRestClient
      *
      * @return string
      */
-    public function mountUrl($endpoint, $env, $id, $parameters = []);
+    public function mountUrl($endpoint, $env, $id, $objectId = "", $parameters = [], $option = "");
 
     /**
      * Function who create a request
