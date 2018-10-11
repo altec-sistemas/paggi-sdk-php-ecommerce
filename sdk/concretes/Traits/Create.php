@@ -26,7 +26,7 @@ use \Paggi\SDK\RestClient;
 trait Create
 {
     /**
-     * POST METHOD
+     * POST create METHOD
      *
      * @param $params Parameters used to create any object
      *
