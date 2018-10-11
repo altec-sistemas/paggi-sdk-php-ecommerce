@@ -27,7 +27,7 @@ trait Util
 {
     private static $container;
 
-    public static function makeRequest($class, $method, $bodyParams = [], $urlParams = [], $id = "", $capture = "")
+    public static function makeRequest($class, $method, $bodyParams = [], $urlParams = [], $id = "", $options = "")
     {
         $builder = new \DI\ContainerBuilder();
         $builder->addDefinitions('ConfigDI.php');
@@ -48,8 +48,8 @@ trait Util
             ]
         );
         $body = $restClient->createBody($bodyParams);
-        $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $urlParams, $capture);
-        var_dump($url);
+        //$url = "https://webhook.site/f50cebac-6fbc-4d49-b59c-37719ed80496";
+        $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $urlParams, $options);
         $response = $restClient->createRequest(
             $method,
             $url,

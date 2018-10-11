@@ -54,7 +54,6 @@ trait ResponseManagement
                     $entriesResponse = $contents->entries;
                     $itemNumber = 0;
 
-
                     foreach ($entriesResponse as $item) {
                         $obj = new $reflectedClass($item);
                         $entries[$className . $itemNumber] = $obj;
@@ -65,10 +64,10 @@ trait ResponseManagement
 
                     foreach ($contents as $key => $value) {
                         if (strcmp($key, "entries") != 0) {
-                            $outsideObject[$key] = [$value];
+                            $outsideObject[$key] = $value;
                         }
                         if (strcmp($key, "entries") == 0) {
-                            $outsideObject[$key] = [$objClass];
+                            $outsideObject[$key] = $objClass;
                         }
                     }
                     return new $reflectedClass($outsideObject);

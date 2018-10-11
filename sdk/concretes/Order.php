@@ -8,5 +8,5 @@ use Paggi\SDK\Traits\Capture;
 
 class Order extends DynamicObjectGenerator
 {
-    use Create;
+    use Create, Capture, Cancel;
 }
