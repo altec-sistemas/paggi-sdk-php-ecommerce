@@ -1,10 +1,10 @@
 <?php
 /**
- * This file holds the top level logic for any get methods
+ * This file holds the top level logic for any find methods
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
- * @category Create_Test_File
+ * @category Find_File
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -17,7 +17,7 @@ use \Paggi\SDK\RestClient;
 /**
  * Trait Find - Find all of a given resource or find by ID
  *
- * @category Create_Test_Class
+ * @category Find_Trait
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html

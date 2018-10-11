@@ -1,6 +1,6 @@
 <?php
 /**
- * This file holds the top level logic for any post methods
+ * This file holds the top level logic for any create methods
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
@@ -17,7 +17,7 @@ use \Paggi\SDK\RestClient;
 /**
  * Trait Create - Create/Create a new resource
  *
- * @category Create_class
+ * @category Create_Trait
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -28,9 +28,7 @@ trait Create
     /**
      * POST METHOD
      *
-     * @param $params Resource paramns
-     *
-     * @throws PaggiException Representation of HTTP error code
+     * @param $params Parameters used to create any object
      *
      * @return mixed Object representing created entity
      */

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file holds the top level logic for any post methods
+ * This file holds the top level logic for any delete methods
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
- * @category Create_Test_File
+ * @category Delete_File
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -15,9 +15,9 @@ namespace Paggi\SDK\Traits;
 use \Paggi\SDK\RestClient;
 
 /**
- * Trait Delete - Delete/Delete a new resource
+ * Trait Delete - Delete some resource
  *
- * @category Create_Test_class
+ * @category Delete_Trait
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -28,14 +28,13 @@ trait Delete
     /**
      * DELETE METHOD
      *
-     * @param $id Resource paramns
+     * @param $id The id of the object who will be deleted
      *
      * @return boolean Result of the deletion
      */
     public static function delete($id)
     {
         $class = new \ReflectionClass(self::class);
-
         return self::makeRequest($class, "Delete", [], [], $id);
     }
 }

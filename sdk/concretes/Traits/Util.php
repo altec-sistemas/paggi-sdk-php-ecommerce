@@ -17,7 +17,7 @@ use \Paggi\SDK\RestClient;
 /**
  * Class Util - Reduce code in other classes
  *
- * @category Util_Class
+ * @category Util_Trait
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -27,12 +27,26 @@ trait Util
 {
     private static $container;
 
+    /**
+     * Undocumented function
+     *
+     * @param string $class      Request's creator's class
+     * @param string $method     Request's method
+     * @param array  $bodyParams Parameters used to be sent in request's body
+     * @param array  $urlParams  parameters used in query url
+     * @param string $id         object's ID
+     * @param string $options    ["void", "capture", ""]
+     *
+     * @return void
+     */
     public static function makeRequest($class, $method, $bodyParams = [], $urlParams = [], $id = "", $options = "")
     {
+        //DI configuration
         $builder = new \DI\ContainerBuilder();
         $builder->addDefinitions('ConfigDI.php');
         self::$container = $builder->build();
 
+        //Environment configuration
         $envConfigure = self::$container->get('EnvironmentConfiguration');
         $token = $envConfigure->getToken();
         $partnerId = $envConfigure->getPartnerId();
@@ -48,7 +62,6 @@ trait Util
             ]
         );
         $body = $restClient->createBody($bodyParams);
-        //$url = "https://webhook.site/f50cebac-6fbc-4d49-b59c-37719ed80496";
         $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $urlParams, $options);
         $response = $restClient->createRequest(
             $method,

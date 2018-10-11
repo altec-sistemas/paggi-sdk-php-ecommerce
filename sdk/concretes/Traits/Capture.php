@@ -1,10 +1,10 @@
 <?php
 /**
- * This file holds the top level logic for any get methods
+ * This file holds the top level logic for any capture methods
  *
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
- * @category Create_Test_File
+ * @category Capture_File
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -15,9 +15,9 @@ namespace Paggi\SDK\Traits;
 use \Paggi\SDK\RestClient;
 
 /**
- * Trait Capture - Capture all of a given resoure or find by ID
+ * Trait Capture - Capture all of a given resource or find by ID
  *
- * @category Create_Test_Class
+ * @category Capture_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -26,10 +26,10 @@ use \Paggi\SDK\RestClient;
 trait Capture
 {
     /**
-     * GET METHOD
+     * PUT capture METHOD
      *
-     * @param $params Resource paramns
-     * @throws PaggiException Representation of HTTP error code
+     * @param $id Order ID who you want to cancel
+     *
      * @return mixed Object representing created entity
      */
     static public function capture($id = "")

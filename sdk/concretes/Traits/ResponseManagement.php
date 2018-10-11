@@ -1,6 +1,6 @@
 <?php
 /**
- * This file holds the tlogic to manage the responses
+ * This file holds the logic to manage the responses
  * PHP version 5.6, 7.0, 7.1, 7.2
  *
  * @category Create_File
@@ -16,7 +16,7 @@ use \Paggi\SDK\RestClient;
 /**
  * Trait Create - Create/Create a new resource
  *
- * @category Create_class
+ * @category ResponseManagement_Trait
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -27,11 +27,9 @@ trait ResponseManagement
     /**
      * POST METHOD
      *
-     * @param $responseCurl Resource paramns
+     * @param $responseCurl Response from Paggi API
      *
-     * @throws PaggiException Representation of HTTP error code
-     *
-     * @return mixed Object representing created entity
+     * @return mixed Object that differs depending of the request's status code
      */
     static public function manageResponse($responseCurl)
     {
@@ -50,10 +48,12 @@ trait ResponseManagement
         //Dealing with the response possibilities
         switch ($responseCurl->getStatusCode()) {
             case 200:
+                //verify if response has more than one entry
                 if (array_key_exists("entries", $contents)) {
                     $entriesResponse = $contents->entries;
                     $itemNumber = 0;
 
+                    //Create the entries object
                     foreach ($entriesResponse as $item) {
                         $obj = new $reflectedClass($item);
                         $entries[$className . $itemNumber] = $obj;
@@ -61,7 +61,7 @@ trait ResponseManagement
                     }
                     $objClass = new $reflectedClass($entries);
 
-
+                    //Create the resource objects
                     foreach ($contents as $key => $value) {
                         if (strcmp($key, "entries") != 0) {
                             $outsideObject[$key] = $value;
@@ -91,6 +91,14 @@ trait ResponseManagement
         }
     }
 
+    /**
+     * Function responsible for push the item to respective array
+     *
+     * @param array $group
+     * @param array $entry
+     *
+     * @return void
+     */
     static public function push($group, $entry)
     {
         array_push($group, $entry);
