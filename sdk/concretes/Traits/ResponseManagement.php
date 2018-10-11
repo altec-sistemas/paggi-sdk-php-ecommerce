@@ -27,7 +27,7 @@ trait ResponseManagement
     /**
      * POST METHOD
      *
-     * @param $params Resource paramns
+     * @param $responseCurl Resource paramns
      *
      * @throws PaggiException Representation of HTTP error code
      *
@@ -35,18 +35,65 @@ trait ResponseManagement
      */
     static public function manageResponse($responseCurl)
     {
+        //Empty arrays definition
+        $entries = [];
+        $outsideObject = [];
+
+        //Get the caller's class name
         $reflectedClass = get_called_class();
-        $contents = $responseCurl->getBody()->getContents();
+        $arrayClassName = explode("\\", $reflectedClass);
+        $className = end($arrayClassName);
+
+        //get the response's content
+        $contents = json_decode($responseCurl->getBody()->getContents());
+
+        //Dealing with the response possibilities
         switch ($responseCurl->getStatusCode()) {
             case 200:
-                # code...
+                if (array_key_exists("entries", $contents)) {
+                    $entriesResponse = $contents->entries;
+                    $itemNumber = 0;
+
+
+                    foreach ($entriesResponse as $item) {
+                        $obj = new $reflectedClass($item);
+                        $entries[$className . $itemNumber] = $obj;
+                        $itemNumber++;
+                    }
+                    $objClass = new $reflectedClass($entries);
+
+
+                    foreach ($contents as $key => $value) {
+                        if (strcmp($key, "entries") != 0) {
+                            $outsideObject[$key] = [$value];
+                        }
+                        if (strcmp($key, "entries") == 0) {
+                            $outsideObject[$key] = [$objClass];
+                        }
+                    }
+                    return new $reflectedClass($outsideObject);
+                }
+                return new $reflectedClass($contents);
                 break;
             case 201:
-                return new $reflectedClass(json_decode($contents));
+                return new $reflectedClass(($contents));
             case 204:
+            case 400:
+            case 401:
+            case 402:
+            case 422:
+            case 500:
+            case 501:
+            case 502:
+            case 502:
                 return $responseCurl;
             default:
-                return new $reflectedClass(json_decode($contents));
+                return new $reflectedClass($contents);
         }
+    }
+
+    static public function push($group, $entry)
+    {
+        array_push($group, $entry);
     }
 }

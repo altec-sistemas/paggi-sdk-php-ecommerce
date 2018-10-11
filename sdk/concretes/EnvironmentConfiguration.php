@@ -128,7 +128,11 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
      */
     public function getToken()
     {
-        return self::$token;
+        $tokenValidator = self::$container->get('TokenValidation');
+        if (!$tokenValidator->isValidToken(self::$token)) {
+            return false;
+        }
+            return self::$token;
     }
 
     /**

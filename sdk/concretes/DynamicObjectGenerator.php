@@ -23,8 +23,7 @@ use Paggi\SDK\Traits\Util;
  */
 abstract class DynamicObjectGenerator
 {
-    use ResponseManagement;
-    use Util;
+    use ResponseManagement, Util;
 
     /**
      * In this case, $this is the class that called this one.
