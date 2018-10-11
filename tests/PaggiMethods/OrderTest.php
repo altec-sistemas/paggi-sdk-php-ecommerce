@@ -18,7 +18,7 @@ use Paggi\SDK;
 /**
  * This class will test the Order class
  *
- * @category RestClient_Test_Class
+ * @category Order_Test_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -27,7 +27,7 @@ use Paggi\SDK;
 class OrderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Function responsible to test "deleteOrder" and is expected to return 404
+     * Function responsible to test "OneOrderWithCapture"
      *
      * @return void
      */
@@ -71,7 +71,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Function responsible to test "deleteOrder" and is expected to return 404
+     * Function responsible to test "OneOrderWithoutCapture"
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class OrderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Function responsible to test "deleteOrder" and is expected to return 404
+     * Function responsible to test "OneOrderWithoutCaptureAndCapture"
      *
      * @return void
      */
@@ -167,6 +167,11 @@ class OrderTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp("/authorized/", $response->status);
     }
 
+    /**
+     * Function responsible to test "OneOrderWithoutCaptureAndCancel"
+     *
+     * @return void
+     */
     public function testOneOrderWithoutCaptureAndCancel()
     {
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();

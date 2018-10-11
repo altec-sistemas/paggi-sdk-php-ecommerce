@@ -18,7 +18,7 @@ use Paggi\SDK;
 /**
  * This class will test the card class
  *
- * @category RestClient_Test_Class
+ * @category Card_Test_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html

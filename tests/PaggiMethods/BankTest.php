@@ -18,7 +18,7 @@ use Paggi\SDK;
 /**
  * This class will test the Bank class
  *
- * @category RestClient_Test_Class
+ * @category Bank_Test_Class
  * @package  Paggi
  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
@@ -27,7 +27,8 @@ use Paggi\SDK;
 class BankTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Function responsible to test "deleteBank" and is expected to return 404
+     * Function responsible to test "getBank" and is expected to return the object with all banks.
+     * In this case, count > 20
      *
      * @return void
      */

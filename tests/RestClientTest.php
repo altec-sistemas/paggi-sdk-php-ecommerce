@@ -29,7 +29,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * Function responsible for test the "getEndpoint"function
+     * Function responsible for test the "getEndpoint" function
      * In this case, we will test for GET method
      *
      * @return void
@@ -41,7 +41,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Function responsible for test the "getEndpoint"function
+     * Function responsible for test the "getEndpoint" function
      *
      * @return void
      */
@@ -105,6 +105,11 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($client->getStatusCode(), 200);
     }
 
+    /**
+     * This function will test the client's basic workflow to create something
+     *
+     * @return void
+     */
     public function testIntegrationPost()
     {
         $envConf = new EnvironmentConfiguration();
@@ -145,6 +150,11 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($response->getStatusCode(), 201);
     }
 
+    /**
+     * This function will test the client's basic workflow to get something
+     *
+     * @return void
+     */
     public function testIntegrationGet()
     {
         $envConf = new EnvironmentConfiguration();
