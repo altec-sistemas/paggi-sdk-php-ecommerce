@@ -13,7 +13,6 @@
 
 namespace Paggi\SDK;
 
-use DI;
 use Lcobucci\JWT\Parser;
 use Paggi\SDK\Interfaces\IEnvironmentConfiguration;
 use Paggi\SDK\TokenValidation;
@@ -38,9 +37,9 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
 
     public function __construct()
     {
-        $builder = new \DI\ContainerBuilder();
-        $builder->addDefinitions('ConfigDI.php');
-        self::$container = $builder->build();
+        //$builder = new \DI\ContainerBuilder();
+        //$builder->addDefinitions('ConfigDI.php');
+        //self::$container = $builder->build();
     }
 
     /**
