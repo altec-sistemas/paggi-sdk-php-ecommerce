@@ -32,10 +32,10 @@ trait Capture
      *
      * @return mixed Object representing created entity
      */
-    static public function capture($id = "")
+    static public function capture($id, $requestBody = [])
     {
         $class = new \ReflectionClass(self::class);
-        $response = self::makeRequest($class, "put", [], [], $id, "/capture");
+        $response = self::makeRequest($class, "put", $requestBody, [], $id, "/capture");
         return $response;
     }
 }

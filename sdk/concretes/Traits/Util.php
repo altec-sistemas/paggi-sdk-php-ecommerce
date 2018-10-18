@@ -12,7 +12,8 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
+use Paggi\SDK\RestClient;
+use \Paggi\SDK\EnvironmentConfiguration;
 
 /**
  * Class Util - Reduce code in other classes
@@ -42,23 +43,23 @@ trait Util
     public static function makeRequest($class, $method, $bodyParams = [], $urlParams = [], $id = "", $options = "")
     {
         //DI configuration
-        $builder = new \DI\ContainerBuilder();
-        $builder->addDefinitions('ConfigDI.php');
-        self::$container = $builder->build();
+        //$builder = new \DI\ContainerBuilder();
+        //$builder->addDefinitions('ConfigDI.php');
+        //self::$container = $builder->build();
 
         //Environment configuration
-        $envConfigure = self::$container->get('EnvironmentConfiguration');
+        $envConfigure = new EnvironmentConfiguration();
         $token = $envConfigure->getToken();
         $partnerId = $envConfigure->getPartnerId();
         $env = $envConfigure->getEnv();
 
         //request itself
-        $restClient = self::$container->get('RestClient');
+        $restClient = new RestClient();
         $method = $restClient->setMethod($method);
         $endPoint = $restClient->GetEndPoint($class->getShortName());
         $headers = $restClient->CreateHeaders(
             [
-                "Authorization" => "Bearer " . $token
+                "Authorization" => "Bearer " . $token,
             ]
         );
         $body = $restClient->createBody($bodyParams);

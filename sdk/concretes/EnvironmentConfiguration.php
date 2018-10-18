@@ -11,24 +11,24 @@
  * @link     http://developers.paggi.com
  */
 
- namespace Paggi\SDK;
+namespace Paggi\SDK;
 
- use Lcobucci\JWT\ValidationData;
- use Lcobucci\JWT\Parser;
- use Paggi\SDK\Interfaces\IEnvironmentConfiguration;
- use DI;
+use DI;
+use Lcobucci\JWT\Parser;
+use Paggi\SDK\Interfaces\IEnvironmentConfiguration;
+use Paggi\SDK\TokenValidation;
 
- /**
-  * This class verify the environment's configuration
-  *
-  * PHP version 5.6, 7.0, 7.1, 7.2
-  *
-  * @category Environment_Class
-  * @package  Paggi
-  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
-  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
-  * @link     http://developers.paggi.com
-  */
+/**
+ * This class verify the environment's configuration
+ *
+ * PHP version 5.6, 7.0, 7.1, 7.2
+ *
+ * @category Environment_Class
+ * @package  Paggi
+ * @author   Paggi Integracoes <ti-integracoes@paggi.com>
+ * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
+ * @link     http://developers.paggi.com
+ */
 class EnvironmentConfiguration implements IEnvironmentConfiguration
 {
     private static $token = null;
@@ -52,7 +52,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
      */
     public function setToken($token)
     {
-        $tokenValidator = self::$container->get('TokenValidation');
+        $tokenValidator = new \Paggi\SDK\TokenValidation(); //self::$container->get('TokenValidation');
         if ($tokenValidator->isValidToken($token)) {
             self::$token = $token;
             $this->setPartnerIdByToken($token);
@@ -72,7 +72,7 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     {
         $possible = array(
             "STAGING",
-            "PROD"
+            "PROD",
         );
         if (in_array(strtoupper($environmentStatus), $possible)) {
             self::$environment = ucfirst(strtolower($environmentStatus));
@@ -91,9 +91,9 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
     public function setPartnerIdByToken($token = "")
     {
         $tokenObj
-            = (!isset($token) || is_null($token) || empty($token)) ?
-                (new Parser())->parse((string) self::$token) :
-                (new Parser())->parse((string) $token);
+        = (!isset($token) || is_null($token) || empty($token)) ?
+        (new Parser())->parse((string) self::$token) :
+        (new Parser())->parse((string) $token);
         if (!$tokenObj->hasClaim('permissions')) {
             return false;
         }
@@ -128,11 +128,11 @@ class EnvironmentConfiguration implements IEnvironmentConfiguration
      */
     public function getToken()
     {
-        $tokenValidator = self::$container->get('TokenValidation');
+        $tokenValidator = new \Paggi\SDK\TokenValidation(); //self::$container->get('TokenValidation');
         if (!$tokenValidator->isValidToken(self::$token)) {
             return false;
         }
-            return self::$token;
+        return self::$token;
     }
 
     /**

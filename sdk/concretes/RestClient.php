@@ -11,23 +11,22 @@
  * @link     http://developers.paggi.com
  */
 
- namespace Paggi\SDK;
+namespace Paggi\SDK;
 
- use Paggi\SDK\EnvironmentConfiguration;
- use Paggi\SDK\Interfaces\IRestClient;
- use Doctrine\Common\Inflector\Inflector;
+use Doctrine\Common\Inflector\Inflector;
+use Paggi\SDK\Interfaces\IRestClient;
 
- /**
-  * This class verify the RestClient
-  *
-  * PHP version 5.6, 7.0, 7.1, 7.2
-  *
-  * @category RestClient_Class
-  * @package  Paggi
-  * @author   Paggi Integracoes <ti-integracoes@paggi.com>
-  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
-  * @link     http://developers.paggi.com
-  */
+/**
+ * This class verify the RestClient
+ *
+ * PHP version 5.6, 7.0, 7.1, 7.2
+ *
+ * @category RestClient_Class
+ * @package  Paggi
+ * @author   Paggi Integracoes <ti-integracoes@paggi.com>
+ * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
+ * @link     http://developers.paggi.com
+ */
 class RestClient implements IRestClient
 {
     private static $container;
@@ -36,9 +35,9 @@ class RestClient implements IRestClient
 
     public function __construct()
     {
-        $builder = new \DI\ContainerBuilder();
-        $builder->addDefinitions('ConfigDI.php');
-        self::$container = $builder->build();
+        //$builder = new \DI\ContainerBuilder();
+        //$builder->addDefinitions('ConfigDI.php');
+        //self::$container = $builder->build();
     }
 
     /**
@@ -54,10 +53,10 @@ class RestClient implements IRestClient
             "GET",
             "POST",
             "PUT",
-            "DELETE"
+            "DELETE",
         );
         $method = in_array(strtoupper($method), $possible)
-                ? strtoupper($method) : "";
+        ? strtoupper($method) : "";
         return $method;
     }
 
@@ -70,7 +69,7 @@ class RestClient implements IRestClient
      */
     public function getEndPoint($resource)
     {
-        $inflector = self::$container->get('Inflector');
+        $inflector = new Inflector(); //self::$container->get('Inflector');
         $endPoint = strtolower(
             preg_replace(
                 '/(?<!^)[A-Z]/',
@@ -120,12 +119,12 @@ class RestClient implements IRestClient
      */
     public function mountUrl($endPoint, $env, $id, $objectId = "", $parameters = [], $option = "")
     {
-        $url =  self::$prefixUrl;
-        $url .= !strcmp($env, "Staging") ? "stg.": "";
+        $url = self::$prefixUrl;
+        $url .= !strcmp($env, "Staging") ? "stg." : "";
         $url .= self::$suffixUrl;
         $url .= (strcmp($endPoint, "banks"))
-                ? "partners/" . $id . "/"
-                : "";
+        ? "partners/" . $id . "/"
+        : "";
         $url .= $endPoint;
         $url .= empty($objectId) ? "" : "/" . $objectId;
         $url .= $option;
@@ -153,14 +152,14 @@ class RestClient implements IRestClient
      */
     public function createRequest($method, $url, $headers = [], $body = [])
     {
-        $client = self::$container->get('HttpClient');
+        $client = new \GuzzleHttp\Client(); //self::$container->get('HttpClient');
         $client->setDefaultOption('exceptions', false);
         $request = $client->createRequest(
             $method,
             $url,
             [
-                "headers"=> $headers,
-                "json"=> $body
+                "headers" => $headers,
+                "json" => $body,
             ]
         );
         $response = $client->send($request);
