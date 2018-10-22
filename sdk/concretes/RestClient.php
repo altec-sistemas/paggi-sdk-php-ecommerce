@@ -154,12 +154,15 @@ class RestClient implements IRestClient
     {
         $client = new \GuzzleHttp\Client(); //self::$container->get('HttpClient');
         $client->setDefaultOption('exceptions', false);
+        //$userAgent = $client.getHeaders()['User-Agent'];
+        array_push($headers, ["User-Agent" => phpversion() . " Guzzle5.3 " . curl_version()["version"] . " PaggiPHPSDK"]);
         $request = $client->createRequest(
             $method,
             $url,
             [
                 "headers" => $headers,
                 "json" => $body,
+                "exceptions" => false,
             ]
         );
         $response = $client->send($request);

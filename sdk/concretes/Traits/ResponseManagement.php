@@ -31,7 +31,7 @@ trait ResponseManagement
      *
      * @return mixed Object that differs depending of the request's status code
      */
-    static public function manageResponse($responseCurl)
+    public static function manageResponse($responseCurl)
     {
         //Empty arrays definition
         $entries = [];
@@ -76,11 +76,13 @@ trait ResponseManagement
                 break;
             case 201:
                 return new $reflectedClass(($contents));
+            case 422:
+                $code = $responseCurl->getStatusCode();
+                return [$code => "Parâmetros inválidos."];
             case 204:
             case 400:
             case 401:
             case 402:
-            case 422:
             case 500:
             case 501:
             case 502:
@@ -99,7 +101,7 @@ trait ResponseManagement
      *
      * @return void
      */
-    static public function push($group, $entry)
+    public static function push($group, $entry)
     {
         array_push($group, $entry);
     }

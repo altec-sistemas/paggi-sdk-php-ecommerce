@@ -60,6 +60,7 @@ trait Util
         $headers = $restClient->CreateHeaders(
             [
                 "Authorization" => "Bearer " . $token,
+
             ]
         );
         $body = $restClient->createBody($bodyParams);
