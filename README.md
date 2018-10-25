@@ -56,6 +56,7 @@ $charge =
 $orderParams=
 [
     "external_identifier" => "ABC123",
+    "ip" => "8.8.8.8",
     "charges" => [$charge],
     "customer" =>
     [
@@ -80,4 +81,4 @@ $banks = $bankFinder->find(["start"=>0, "count"=>20]);
 
 ### Mais informações
 
-PAra mais informação, você pode conferir nossa documentação [aqui](https://developers.paggi.com/).
+Para mais informação, você pode conferir nossa documentação [aqui](https://developers.paggi.com/).
