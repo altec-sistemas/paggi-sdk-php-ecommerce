@@ -78,7 +78,12 @@ trait ResponseManagement
                 return new $reflectedClass(($contents));
             case 422:
                 $code = $responseCurl->getStatusCode();
-                return [$code => "Parâmetros inválidos."];
+                $parametros = "";
+                foreach ($contents->errors as $key => $value) {
+                    $parametros .= $key . "\n";
+                }
+                return [$code => "Parâmetros inválidos.",
+                    "Parametros:" => $parametros];
             case 204:
             case 400:
             case 401:
