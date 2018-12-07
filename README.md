@@ -21,7 +21,7 @@ $envConfiguration->setToken(getenv("ENVTOKEN"));
 $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
 $cardParams =
 [
-    "cvv" => "123",
+    "cvc" => "123",
     "year" => "2022",
     "number" => "4123200700046446",
     "month" => "09",
