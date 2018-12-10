@@ -24,7 +24,7 @@ use Paggi\SDK;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  */
-class CardTest extends \PHPUnit_Framework_TestCase
+class CardTest extends TestCase
 {
     /**
      * Function responsible to test "createCard"
@@ -36,17 +36,17 @@ class CardTest extends \PHPUnit_Framework_TestCase
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $target = new \Paggi\SDK\Card();
         $envConfiguration->setEnv("Staging");
-        $envConfiguration->setToken(getenv("ENVTOKEN"));
-        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
-        $cardParams =
-        [
-            "cvv" => "123",
-            "year" => "2022",
-            "number" => "4123200700046446",
-            "month" => "09",
-            "holder" => "BRUCE WAYNER",
-            "document" => "16123541090"
-        ];
+        $envConfiguration->setToken(getenv("TOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
+        $cardParams
+            = [
+                "cvv" => "123",
+                "year" => "2022",
+                "number" => "4123200700046446",
+                "month" => "09",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090"
+            ];
         $card = $target->create($cardParams);
         $this->assertRegexp(
             "/\w+-*/",
@@ -64,17 +64,17 @@ class CardTest extends \PHPUnit_Framework_TestCase
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $target = new \Paggi\SDK\Card();
         $envConfiguration->setEnv("Staging");
-        $envConfiguration->setToken(getenv("ENVTOKEN"));
-        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
-        $cardParams =
-        [
-            "cvv" => "123",
-            "year" => "2022",
-            "number" => "4123200700046446",
-            "month" => "09",
-            "holder" => "BRUCE WAYNER",
-            "document" => "16123541090"
-        ];
+        $envConfiguration->setToken(getenv("TOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
+        $cardParams
+            = [
+                "cvv" => "123",
+                "year" => "2022",
+                "number" => "4123200700046446",
+                "month" => "09",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090"
+            ];
         $card = $target->create($cardParams);
         $response = $card->delete($card->id);
         $this->assertEquals($response->getStatusCode(), 204);
@@ -90,8 +90,8 @@ class CardTest extends \PHPUnit_Framework_TestCase
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $target = new \Paggi\SDK\Card();
         $envConfiguration->setEnv("Staging");
-        $envConfiguration->setToken(getenv("ENVTOKEN"));
-        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+        $envConfiguration->setToken(getenv("TOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
         $cardId = "22ae0069-0b68-0000-9d8b-b855c796312d";
         $response = $target->delete($cardId);
         $this->assertEquals($response->getStatusCode(), 404);

@@ -17,8 +17,8 @@ use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $target = new \Paggi\SDK\Card();
 $envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("ENVTOKEN"));
-$envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+$envConfiguration->setToken(getenv("TOKEN"));
+$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 $cardParams =
 [
     "cvc" => "123",
@@ -37,8 +37,8 @@ $card = $target->create($cardParams);
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $OrderCreator = new \Paggi\SDK\Order();
 $envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("ENVTOKEN"));
-$envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+$envConfiguration->setToken(getenv("TOKEN"));
+$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 $charge =
 [
     "amount" => 5000,
@@ -74,8 +74,8 @@ $response = $OrderCreator->create($orderParams);
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $bankFinder = new \Paggi\SDK\Bank();
 $envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("ENVTOKEN"));
-$envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+$envConfiguration->setToken(getenv("TOKEN"));
+$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 $banks = $bankFinder->find(["start"=>0, "count"=>20]);
 ```
 
