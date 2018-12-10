@@ -15,6 +15,7 @@ namespace Paggi\SDK;
 
 use Doctrine\Common\Inflector\Inflector;
 use Paggi\SDK\Interfaces\IRestClient;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * This class verify the RestClient
@@ -29,16 +30,8 @@ use Paggi\SDK\Interfaces\IRestClient;
  */
 class RestClient implements IRestClient
 {
-    private static $container;
     private static $prefixUrl = "https://api.";
     private static $suffixUrl = "paggi.com/v1/";
-
-    public function __construct()
-    {
-        //$builder = new \DI\ContainerBuilder();
-        //$builder->addDefinitions('ConfigDI.php');
-        //self::$container = $builder->build();
-    }
 
     /**
      * Function who will set the HTTP method
@@ -152,11 +145,9 @@ class RestClient implements IRestClient
      */
     public function createRequest($method, $url, $headers = [], $body = [])
     {
-        $client = new \GuzzleHttp\Client(); //self::$container->get('HttpClient');
-        $client->setDefaultOption('exceptions', false);
-        //$userAgent = $client.getHeaders()['User-Agent'];
-        array_push($headers, ["User-Agent" => phpversion() . " Guzzle5.3 " . curl_version()["version"] . " PaggiPHPSDK"]);
-        $request = $client->createRequest(
+        $client = new \GuzzleHttp\Client(); 
+        array_push($headers, ["User-Agent" => phpversion() . " Guzzle6 " . curl_version()["version"] . " PaggiPHPSDK"]);
+        $request = $client->request(
             $method,
             $url,
             [
@@ -165,7 +156,6 @@ class RestClient implements IRestClient
                 "exceptions" => false,
             ]
         );
-        $response = $client->send($request);
-        return $response;
+        return $request;
     }
 }

@@ -24,7 +24,7 @@ use Paggi\SDK;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  */
-class BankTest extends \PHPUnit_Framework_TestCase
+class BankTest extends TestCase
 {
     /**
      * Function responsible to test "getBank" and is expected to return the object with all banks.
@@ -38,8 +38,8 @@ class BankTest extends \PHPUnit_Framework_TestCase
         $bankFinder = new \Paggi\SDK\Bank();
 
         $envConfiguration->setEnv("Staging");
-        $envConfiguration->setToken(getenv("ENVTOKEN"));
-        $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
+        $envConfiguration->setToken(getenv("TOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 
         $banks = $bankFinder->find(["start"=>0, "count"=>20]);
         $this->assertTrue($banks->count == 20);

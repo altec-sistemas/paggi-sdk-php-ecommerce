@@ -24,7 +24,7 @@ use Paggi\SDK;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  */
-class TokenValidationTest extends \PHPUnit_Framework_TestCase
+class TokenValidationTest extends TestCase
 {
     /**
      * Function responsible to test the validation of "IsValidToken"
@@ -68,6 +68,6 @@ class TokenValidationTest extends \PHPUnit_Framework_TestCase
      */
     private static function getToken()
     {
-        return getenv('ENVTOKEN');
+        return getenv('TOKEN');
     }
 }

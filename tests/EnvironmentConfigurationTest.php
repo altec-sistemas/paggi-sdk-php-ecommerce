@@ -12,8 +12,8 @@
  */
 namespace Paggi\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Paggi\SDK;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class will test the Environment validation
@@ -24,7 +24,7 @@ use Paggi\SDK;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  */
-class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
+class EnvironmentConfigurationTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Function responsible to test "setToken" to return true
@@ -35,7 +35,7 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
         $this->assertTrue(
-            $target->setToken(getenv('ENVTOKEN')),
+            $target->setToken(getenv('TOKEN')),
             "Token Invalido"
         );
     }
@@ -48,7 +48,7 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetTokenFalse()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertFalse($target->setToken(getenv('INVALIDENVTOKEN')));
+        $this->assertFalse($target->setToken(getenv('INVALIDTOKEN')));
     }
 
     /**
@@ -73,7 +73,6 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($target->setEnv("prod"), "Prod");
     }
 
-
     /**
      * Function responsible to test "testSetPartnerIdByToken" to return true
      *
@@ -82,7 +81,7 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetPartnerIdByTokenTrue()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertTrue($target->setPartnerIdByToken(getenv('ENVTOKEN')));
+        $this->assertTrue($target->setPartnerIdByToken(getenv('TOKEN')));
     }
 
     /**
@@ -93,7 +92,7 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testSetPartnerIdByTokenFalse()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertFalse($target->setPartnerIdByToken(getenv('INVALIDENVTOKEN')));
+        $this->assertFalse($target->setPartnerIdByToken(getenv('INVALIDTOKEN')));
     }
 
     /**
@@ -115,6 +114,7 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
     public function testGetToken()
     {
         $target = new \Paggi\SDK\EnvironmentConfiguration();
+        $target->setToken(getenv('TOKEN'));
         $this->assertInternalType('string', $target->getToken());
     }
 
@@ -130,20 +130,8 @@ class EnvironmentConfigurationTest extends \PHPUnit_Framework_TestCase
         $possible = array(
             "Staging",
             "Prod",
-            "O tipo de ambiente só pode ser Staging ou Prod"
+            "O tipo de ambiente só pode ser Staging ou Prod",
         );
         $this->assertTrue(in_array($target->getEnv(), $possible));
-    }
-
-
-    /**
-     * Function responsible to test "getToken"
-     *
-     * @return void
-     */
-    public function testGetPartnerId()
-    {
-        $target = new \Paggi\SDK\EnvironmentConfiguration();
-        $this->assertInternalType('string', $target->getPartnerId());
     }
 }

@@ -12,9 +12,9 @@
  */
 namespace Paggi\Tests;
 
-use PHPUnit\Framework\TestCase;
-use Paggi\SDK\RestClient;
 use Paggi\SDK\EnvironmentConfiguration;
+use Paggi\SDK\RestClient;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class will test the token validation
@@ -25,7 +25,7 @@ use Paggi\SDK\EnvironmentConfiguration;
  * @license  GNU GPLv3 https://www.gnu.org/licenses/gpl-3.0.en.html
  * @link     http://developers.paggi.com
  */
-class RestClientTest extends \PHPUnit_Framework_TestCase
+class RestClientTest extends TestCase
 {
 
     /**
@@ -59,7 +59,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testCreateBody()
     {
         $target = new RestClient();
-        $body = $target->createBody(["body"=>"aaa"]);
+        $body = $target->createBody(["body" => "aaa"]);
         $this->assertArrayHasKey("body", $body);
     }
 
@@ -99,7 +99,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
             "GET",
             "https://api.stg.paggi.com/v1/banks",
             [
-                "headers" => ["Content-Type" => "application/json"]
+                "headers" => ["Content-Type" => "application/json"],
             ]
         );
         $this->assertEquals($client->getStatusCode(), 200);
@@ -113,17 +113,16 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     public function testIntegrationPost()
     {
         $envConf = new EnvironmentConfiguration();
-        $envConf->setToken(getenv("ENVTOKEN"));
+        $envConf->setToken(getenv("TOKEN"));
         $envConf->setPartnerIdByPartnerId(getenv("PARTNERID"));
         $token = $envConf->getToken();
-        $id = $envConf->getPartnerId();
         $target = new RestClient();
         $env = "Staging";
         $method = $target->setMethod("post");
         $endPoint = $target->getEndPoint("card");
         $headers = $target->createHeaders(
             [
-                "Authorization" => "Bearer " . $token
+                "Authorization" => "Bearer " . $token,
             ]
         );
         $body = $target->createBody(
@@ -133,7 +132,7 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
                 "number" => "4123200444046446",
                 "month" => "09",
                 "holder" => "BRUCE WAYNER",
-                "document" => "16123541090"
+                "document" => "16123541090",
             ]
         );
         $url = $target->mountUrl(
@@ -159,31 +158,31 @@ class RestClientTest extends \PHPUnit_Framework_TestCase
     {
         $envConf = new EnvironmentConfiguration();
         $envConf->setPartnerIdByPartnerId(getenv("PARTNERID"));
-        $id = $envConf->getPartnerId();
+        $partnerId = $envConf->getPartnerId();
         $target = new RestClient();
         $env = "Staging";
         $method = $target->setMethod("Get");
         $endPoint = $target->getEndPoint("bank");
         $headers = $target->createHeaders(
             [
-                "headers" => ["Content-Type" => "application/json"]
+                "headers" => ["Content-Type" => "application/json"],
             ]
         );
         $body = $target->createBody();
         $url = $target->mountUrl(
             $endPoint,
             $env,
-            $id,
+            $partnerId,
             "",
             [
-                "start"=>0,
-                "count"=>5
+                "start" => 0,
+                "count" => 5,
             ],
             ""
         );
         $response = $target->createRequest(
             $method,
-            "https://api.stg.paggi.com/v1/banks",
+            $url, //"https://api.stg.paggi.com/v1/banks",
             $headers,
             $body
         );
