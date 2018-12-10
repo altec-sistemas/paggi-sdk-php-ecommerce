@@ -78,6 +78,26 @@ $envConfiguration->setToken(getenv("ENVTOKEN"));
 $envConfiguration->setPartnerIdByToken(getenv("ENVTOKEN"));
 $banks = $bankFinder->find(["start"=>0, "count"=>20]);
 ```
+### Planos
+
+```php
+$envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+$planCreator = new \Paggi\SDK\Plan();
+$envConfiguration->setEnv("Staging");
+$envConfiguration->setToken(getenv("ENVTOKEN"));
+
+$planParams =
+[
+    "name" => "Meu primeiro plano",
+    "price" => 1990,
+    "interval" => "1m",
+    "trial_period" => "2d",
+    "external_identifier" => "12345",
+    "description"=> "Teste"
+];
+
+$response = $planCreator->create($planParams);
+```
 
 ### Mais informações
 
