@@ -42,10 +42,6 @@ trait Util
      */
     public static function makeRequest($class, $method, $bodyParams = [], $urlParams = [], $id = "", $options = "")
     {
-        //DI configuration
-        //$builder = new \DI\ContainerBuilder();
-        //$builder->addDefinitions('ConfigDI.php');
-        //self::$container = $builder->build();
 
         //Environment configuration
         $envConfigure = new EnvironmentConfiguration();
@@ -65,6 +61,10 @@ trait Util
         );
         $body = $restClient->createBody($bodyParams);
         $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $urlParams, $options);
+
+        var_dump($url);
+        var_dump($body);
+
         $response = $restClient->createRequest(
             $method,
             $url,
