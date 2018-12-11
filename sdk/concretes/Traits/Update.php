@@ -12,9 +12,6 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
-use \Paggi\SDK\Util;
-
 /**
  * Trait Update - Update a given resource by ID
  *
@@ -34,7 +31,10 @@ trait Update
      *
      * @return mixed Object representing updated entity
      */
-    static public function update($params, $id = "")
+    public static function update($params, $id)
     {
+        $class = new \ReflectionClass(self::class);
+        $response = self::makeRequest($class, "PUT", $params, [], $id);
+        return self::manageResponse($response);
     }
 }
