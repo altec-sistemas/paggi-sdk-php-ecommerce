@@ -11,8 +11,6 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
-
 /**
  * Trait Create - Create/Create a new resource
  *
@@ -77,25 +75,34 @@ trait ResponseManagement
             case 201:
                 return new $reflectedClass(($contents));
             case 422:
-                $code = $responseCurl->getStatusCode();
-                $parametros = "";
-                foreach ($contents->errors as $key => $value) {
-                    $parametros .= $key . "\n";
+                $parametros = [];
+                foreach ($contents as $key => $value) {
+                    array_push($parametros, [$key => $value]);
                 }
-                return [$code => "Parâmetros inválidos.",
-                    "Parametros:" => $parametros];
+                return [
+                    "code" => $code, "mensagem" => "Foi encontrado um erro validando algum parâmetro do corpo da requisição",
+                    "parameters" => [$parametros],
+                ];
             case 204:
+                return ["code" => $code, "mensagem" => "Deletado com sucesso."];
             case 400:
+                return ["code" => $code, "mensagem" => "Algum parâmetro ou cabeçalho HTTP requerido está ausente."];
             case 401:
+                return ["code" => $code, "mensagem" => "Não autorizada."];
             case 402:
+                return ["code" => $code, "mensagem" => "Uma ou mais cobranças foram negadas"];
             case 500:
+                return ["code" => $code, "mensagem" => "Erro interno no servidor."];
             case 501:
+                return ["code" => $code, "mensagem" => "O método HTTP que você usou não é implementado para o recurso solicitado."];
             case 502:
-            case 502:
-                return $responseCurl;
+                return ["code" => $code, "mensagem" => "Ocorreu um erro na infraestrutura Paggi."];
+            case 503:
+                return ["code" => $code, "mensagem" => "Ocorreu um erro na infraestrutura Paggi."];
             default:
                 return new $reflectedClass($contents);
         }
+
     }
 
     /**
