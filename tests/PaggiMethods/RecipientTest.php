@@ -37,8 +37,6 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
     {
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $recipientsFinder = new \Paggi\SDK\Recipient();
-        var_dump("aaa");
-
         $envConfiguration->setEnv("Staging");
         $envConfiguration->setToken(getenv("TOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
@@ -70,7 +68,6 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
             ],
         ];
         $recipients = $recipient->create($recipientParams);
-        var_dump($recipients);
 
         $this->assertRegexp(
             "/\w+-*/",
