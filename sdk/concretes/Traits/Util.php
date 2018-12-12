@@ -62,9 +62,6 @@ trait Util
         $body = $restClient->createBody($bodyParams);
         $url = $restClient->mountURL($endPoint, $env, $partnerId, $id, $urlParams, $options);
 
-        var_dump($url);
-        var_dump($body);
-
         $response = $restClient->createRequest(
             $method,
             $url,
