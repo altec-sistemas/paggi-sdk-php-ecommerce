@@ -12,8 +12,6 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
-
 /**
  * Trait Capture - Capture all of a given resource or find by ID
  *
@@ -32,10 +30,10 @@ trait Capture
      *
      * @return mixed Object representing created entity
      */
-    static public function capture($id, $requestBody = [])
+    public static function capture($id, $requestBody = [])
     {
         $class = new \ReflectionClass(self::class);
         $response = self::makeRequest($class, "put", $requestBody, [], $id, "/capture");
-        return $response;
+        return self::manageResponse($response);
     }
 }
