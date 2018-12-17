@@ -12,8 +12,6 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
-
 /**
  * Trait Cancel - Cancel all of a given resource or find by ID
  *
@@ -32,10 +30,10 @@ trait Cancel
      *
      * @return mixed Object representing created entity
      */
-    static public function cancel($id)
+    public static function cancel($id)
     {
         $class = new \ReflectionClass(self::class);
         $response = self::makeRequest($class, "put", [], [], $id, "/void");
-        return $response;
+        return self::manageResponse($response);
     }
 }

@@ -40,30 +40,30 @@ class OrderTest extends TestCase
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 
         $charge
-            = [
-                "amount" => 5000,
-                "card" =>
-                [
-                    "number" => "5573710095684403",
-                    "cvc" => "123",
-                    "holder" => "BRUCE WAYNE",
-                    "year" => "2020",
-                    "month" => "04",
-                    "document" => "16123541090",
-                ],
-            ];
+        = [
+            "amount" => 5000,
+            "card" =>
+            [
+                "number" => "5573710095684403",
+                "cvc" => "123",
+                "holder" => "BRUCE WAYNE",
+                "year" => "2020",
+                "month" => "04",
+                "document" => "16123541090",
+            ],
+        ];
         $orderParams
-            = [
-                "external_identifier" => "ABC123",
-                "ip"=> "8.8.8.8",
-                "charges" => [$charge],
-                "customer" =>
-                [
-                    "name" => "Bruce Wayne",
-                    "document" => "86219425006",
-                    "email" => "bruce@waynecorp.com",
-                ],
-            ];
+        = [
+            "external_identifier" => "ABC123",
+            "ip" => "8.8.8.8",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com",
+            ],
+        ];
         $response = $orderCreator->create($orderParams);
 
         $this->assertRegExp("/captured/", $response->status);
@@ -94,23 +94,23 @@ class OrderTest extends TestCase
             ]
         );
         $charge
-            = [
-                "amount" => 5000,
-                "card" => ["id" => $card->id],
-            ];
+        = [
+            "amount" => 5000,
+            "card" => ["id" => $card->id],
+        ];
         $orderParams
-            = [
-                "capture" => false,
-                "external_identifier" => "ABC123",
-                "ip"=> "8.8.8.8",
-                "charges" => [$charge],
-                "customer" =>
-                [
-                    "name" => "Bruce Wayne",
-                    "document" => "86219425006",
-                    "email" => "bruce@waynecorp.com",
-                ],
-            ];
+        = [
+            "capture" => false,
+            "external_identifier" => "ABC123",
+            "ip" => "8.8.8.8",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com",
+            ],
+        ];
         $response = $orderCreator->create($orderParams);
         $this->assertRegExp("/authorized/", $response->status);
     }
@@ -144,26 +144,27 @@ class OrderTest extends TestCase
             ]
         );
         $charge
-            = [
-                "amount" => 5000,
-                "card" => ["id" => $card->id],
-            ];
+        = [
+            "amount" => 5000,
+            "card" => ["id" => $card->id],
+        ];
         $orderParams
-            = [
-                "capture" => false,
-                "external_identifier" => "ABC123",
-                "ip"=> "8.8.8.8",
-                "charges" => [$charge],
-                "customer" =>
-                [
-                    "name" => "Bruce Wayne",
-                    "document" => "86219425006",
-                    "email" => "bruce@waynecorp.com",
-                ],
-            ];
+        = [
+            "capture" => false,
+            "external_identifier" => "ABC123",
+            "ip" => "8.8.8.8",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com",
+            ],
+        ];
         $response = $orderCreator->create($orderParams);
-        //$capture = $response->capture();
-        $this->assertRegExp("/authorized/", $response->status);
+        $capture = $response->capture($response->id);
+        //var_dump($capture);
+        $this->assertRegExp("/captured/", $capture->status);
     }
 
     /**
@@ -195,25 +196,71 @@ class OrderTest extends TestCase
             ]
         );
         $charge
-            = [
-                "amount" => 5000,
-                "card" => ["id" => $card->id],
-            ];
+        = [
+            "amount" => 5000,
+            "card" => ["id" => $card->id],
+        ];
         $orderParams
-            = [
-                "capture" => false,
-                "external_identifier" => "ABC123",
-                "ip"=> "8.8.8.8",
-                "charges" => [$charge],
-                "customer" =>
-                [
-                    "name" => "Bruce Wayne",
-                    "document" => "86219425006",
-                    "email" => "bruce@waynecorp.com",
-                ],
-            ];
+        = [
+            "capture" => false,
+            "external_identifier" => "ABC123",
+            "ip" => "8.8.8.8",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com",
+            ],
+        ];
         $response = $orderCreator->create($orderParams);
-        // $capture = $response->cancel($response->id);
-        $this->assertRegExp("/authorized/", $response->status);
+        $cancel = $response->cancel($response->id);
+        $this->assertRegExp("/cancelled/", $cancel->status);
+    }
+
+    public function testOneOrderWithCaptureAndCancel()
+    {
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $orderCreator = new \Paggi\SDK\Order();
+        $cardCreator = new \Paggi\SDK\Card();
+
+        $envConfiguration->setEnv("Staging");
+        $envConfiguration->setToken(getenv("TOKEN"));
+        $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
+
+        $orderCreator = new \Paggi\SDK\Order();
+        $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+        $cardCreator = new \Paggi\SDK\Card();
+        $card = $cardCreator->create(
+            [
+                "cvv" => "123",
+                "year" => "2022",
+                "number" => "4485200700046446",
+                "month" => "09",
+                "holder" => "BRUCE WAYNER",
+                "document" => "16123541090",
+            ]
+        );
+        $charge
+        = [
+            "amount" => 5000,
+            "card" => ["id" => $card->id],
+        ];
+        $orderParams
+        = [
+            "capture" => true,
+            "external_identifier" => "ABC123",
+            "ip" => "8.8.8.8",
+            "charges" => [$charge],
+            "customer" =>
+            [
+                "name" => "Bruce Wayne",
+                "document" => "86219425006",
+                "email" => "bruce@waynecorp.com",
+            ],
+        ];
+        $response = $orderCreator->create($orderParams);
+        $cancel = $response->cancel($response->id);
+        $this->assertRegExp("/cancelled/", $cancel->status);
     }
 }
