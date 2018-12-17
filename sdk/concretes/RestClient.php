@@ -14,8 +14,8 @@
 namespace Paggi\SDK;
 
 use Doctrine\Common\Inflector\Inflector;
-use Paggi\SDK\Interfaces\IRestClient;
 use GuzzleHttp\Psr7\Request;
+use Paggi\SDK\Interfaces\IRestClient;
 
 /**
  * This class verify the RestClient
@@ -145,7 +145,7 @@ class RestClient implements IRestClient
      */
     public function createRequest($method, $url, $headers = [], $body = [])
     {
-        $client = new \GuzzleHttp\Client(); 
+        $client = new \GuzzleHttp\Client();
         array_push($headers, ["User-Agent" => phpversion() . " Guzzle6 " . curl_version()["version"] . " PaggiPHPSDK"]);
         $request = $client->request(
             $method,
