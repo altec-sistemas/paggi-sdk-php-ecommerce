@@ -44,7 +44,7 @@ trait ResponseManagement
         $contents = json_decode($responseCurl->getBody()->getContents());
 
         //Dealing with the response possibilities
-        switch ($responseCurl->getStatusCode()) {
+        switch ($code = $responseCurl->getStatusCode()) {
             case 200:
                 //verify if response has more than one entry
                 if (array_key_exists("entries", $contents)) {
