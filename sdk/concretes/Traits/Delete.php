@@ -12,8 +12,6 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
-
 /**
  * Trait Delete - Delete some resource
  *
@@ -32,9 +30,10 @@ trait Delete
      *
      * @return boolean Result of the deletion
      */
-    public static function delete($id)
+    public static function delete($idObject)
     {
         $class = new \ReflectionClass(self::class);
-        return self::makeRequest($class, "Delete", [], [], $id);
+        $response = self::makeRequest($class, "Delete", [], [], $idObject);
+        return self::manageResponse($response);
     }
 }
