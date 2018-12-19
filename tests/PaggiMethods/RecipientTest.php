@@ -57,7 +57,7 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
         $recipientParams
         = [
             "name" => "BRUCE WAYNER",
-            "document" => "78945612389",
+            "document" => "77441122553",
             "bank_account" =>
             [
                 "bank_code" => "077",
@@ -87,7 +87,7 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
         $recipientParams
         = [
             "name" => "BRUCE WAYNER",
-            "document" => "44444444444",
+            "document" => "11002244558",
             "bank_account" =>
             [
                 "bank_code" => "077",
