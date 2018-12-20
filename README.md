@@ -68,6 +68,32 @@ $orderParams=
 $response = $OrderCreator->create($orderParams);
 ```
 
+### Recebedores
+
+```php
+$envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
+$recipient = new \Paggi\SDK\Recipient();
+
+$envConfiguration->setEnv("Staging");
+$envConfiguration->setToken(getenv("TOKEN"));
+$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
+
+$recipientParams
+  = [
+  "name" => "BRUCE WAYNER",
+  "document" => "78945612389",
+  "bank_account" =>
+  [
+    "bank_code" => "077",
+    "branch_number" => "0001",
+    "branch_digit" => "5",
+    "account_number" => "120003",
+    "account_digit" => "4",
+  ],
+];
+$recipients = $recipient->create($recipientParams);
+```
+
 ### Bancos
 
 ```php
