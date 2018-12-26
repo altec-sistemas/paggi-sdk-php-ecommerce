@@ -90,6 +90,8 @@ trait ResponseManagement
                 return (object) ["code" => $code, "mensagem" => "Não autorizada."];
             case 402:
                 return (object) ["code" => $code, "mensagem" => "Uma ou mais cobranças foram negadas"];
+            case 404:
+                return (object) ["code" => $code, "mensagem" => "Objeto não encontrado"];
             case 500:
                 return (object) ["code" => $code, "mensagem" => "Erro interno no servidor."];
             case 501:
