@@ -49,15 +49,17 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
     {
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $recipient = new \Paggi\SDK\Recipient();
+        $util = new \Paggi\SDK\UtilMethods();
 
         $envConfiguration->setEnv("Staging");
         $envConfiguration->setToken(getenv("TOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 
+        $randomCPF = $util->generateRandomString();
         $recipientParams
         = [
             "name" => "BRUCE WAYNER",
-            "document" => "77441122553",
+            "document" => $randomCPF,
             "bank_account" =>
             [
                 "bank_code" => "077",
@@ -68,7 +70,6 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
             ],
         ];
         $recipients = $recipient->create($recipientParams);
-
         $this->assertRegexp(
             "/\w+-*/",
             $recipients->id
@@ -79,15 +80,18 @@ class RecipientTest extends \PHPUnit\Framework\TestCase
     {
         $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
         $recipient = new \Paggi\SDK\Recipient();
+        $util = new \Paggi\SDK\UtilMethods();
 
         $envConfiguration->setEnv("Staging");
         $envConfiguration->setToken(getenv("TOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 
+        $randomCPF = $util->generateRandomString();
+
         $recipientParams
         = [
             "name" => "BRUCE WAYNER",
-            "document" => "11002244558",
+            "document" => $randomCPF,
             "bank_account" =>
             [
                 "bank_code" => "077",

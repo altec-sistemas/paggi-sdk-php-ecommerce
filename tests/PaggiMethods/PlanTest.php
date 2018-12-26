@@ -41,8 +41,9 @@ class PlanTest extends \PHPUnit\Framework\TestCase
         $envConfiguration->setToken(getenv("TOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 
-        $plans = $plansFinder->find([], "03277df9-175d-468f-a99c-77e056434138");
-        $this->assertTrue(isset($Plans->id));
+        $plans = $plansFinder->find([], "54643320-7cb6-46bd-8433-ef613e00bfa8");
+
+        $this->assertTrue(isset($plans->id));
     }
 
     public function testCreatePlan()
