@@ -156,6 +156,10 @@ class RestClient implements IRestClient
                 "exceptions" => false,
             ]
         );
+        // var_dump($headers);
+        // var_dump($body);
+        // var_dump($url);
+
         return $request;
     }
 }
