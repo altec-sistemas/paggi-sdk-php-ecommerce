@@ -163,7 +163,6 @@ class OrderTest extends TestCase
         ];
         $response = $orderCreator->create($orderParams);
         $capture = $response->capture($response->id);
-        //var_dump($capture);
         $this->assertRegExp("/captured/", $capture->status);
     }
 

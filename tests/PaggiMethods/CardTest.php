@@ -12,8 +12,8 @@
  */
 namespace Paggi\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Paggi\SDK;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This class will test the card class
@@ -39,18 +39,18 @@ class CardTest extends TestCase
         $envConfiguration->setToken(getenv("TOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
         $cardParams
-            = [
-                "cvv" => "123",
-                "year" => "2022",
-                "number" => "4123200700046446",
-                "month" => "09",
-                "holder" => "BRUCE WAYNER",
-                "document" => "16123541090"
-            ];
+        = [
+            "cvv" => "123",
+            "year" => "2022",
+            "number" => "4123200700046446",
+            "month" => "09",
+            "holder" => "BRUCE WAYNER",
+            "document" => "16123541090",
+        ];
         $card = $target->create($cardParams);
         $this->assertRegexp(
             "/\w+-*/",
-            $card-> id
+            $card->id
         );
     }
 
@@ -67,17 +67,17 @@ class CardTest extends TestCase
         $envConfiguration->setToken(getenv("TOKEN"));
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
         $cardParams
-            = [
-                "cvv" => "123",
-                "year" => "2022",
-                "number" => "4123200700046446",
-                "month" => "09",
-                "holder" => "BRUCE WAYNER",
-                "document" => "16123541090"
-            ];
+        = [
+            "cvv" => "123",
+            "year" => "2022",
+            "number" => "4123200700046446",
+            "month" => "09",
+            "holder" => "BRUCE WAYNER",
+            "document" => "16123541090",
+        ];
         $card = $target->create($cardParams);
-        $response = $card->delete($card->id);
-        $this->assertEquals($response->getStatusCode(), 204);
+        $response = $target->delete($card->id);
+        $this->assertEquals($response->code, 204);
     }
 
     /**
@@ -94,6 +94,6 @@ class CardTest extends TestCase
         $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
         $cardId = "22ae0069-0b68-0000-9d8b-b855c796312d";
         $response = $target->delete($cardId);
-        $this->assertEquals($response->getStatusCode(), 404);
+        $this->assertEquals($response->code, 404);
     }
 }

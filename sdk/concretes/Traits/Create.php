@@ -12,8 +12,6 @@
  */
 namespace Paggi\SDK\Traits;
 
-use \Paggi\SDK\RestClient;
-
 /**
  * Trait Create - Create/Create a new resource
  *
@@ -32,7 +30,7 @@ trait Create
      *
      * @return mixed Object representing created entity
      */
-    static public function create($params)
+    public static function create($params)
     {
         $class = new \ReflectionClass(self::class);
         $response = self::makeRequest($class, "Post", $params);

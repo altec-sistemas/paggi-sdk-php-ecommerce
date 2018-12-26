@@ -42,7 +42,6 @@ trait ResponseManagement
 
         //get the response's content
         $contents = json_decode($responseCurl->getBody()->getContents());
-
         //Dealing with the response possibilities
         switch ($code = $responseCurl->getStatusCode()) {
             case 200:
@@ -79,30 +78,31 @@ trait ResponseManagement
                 foreach ($contents as $key => $value) {
                     array_push($parametros, [$key => $value]);
                 }
-                return [
-                    "code" => $code, "mensagem" => "Foi encontrado um erro validando algum parâmetro do corpo da requisição",
+                return (object) [
+                    "code" => $code, "mensagem" => "Foi encontrado um erro em algum parâmetro do corpo da requisição",
                     "parameters" => [$parametros],
                 ];
             case 204:
-                return ["code" => $code, "mensagem" => "Deletado com sucesso."];
+                return (object) ["code" => $code, "mensagem" => "Deletado com sucesso."];
             case 400:
-                return ["code" => $code, "mensagem" => "Algum parâmetro ou cabeçalho HTTP requerido está ausente."];
+                return (object) ["code" => $code, "mensagem" => "Algum parâmetro ou cabeçalho HTTP está ausente."];
             case 401:
-                return ["code" => $code, "mensagem" => "Não autorizada."];
+                return (object) ["code" => $code, "mensagem" => "Não autorizada."];
             case 402:
-                return ["code" => $code, "mensagem" => "Uma ou mais cobranças foram negadas"];
+                return (object) ["code" => $code, "mensagem" => "Uma ou mais cobranças foram negadas"];
+            case 404:
+                return (object) ["code" => $code, "mensagem" => "Objeto não encontrado"];
             case 500:
-                return ["code" => $code, "mensagem" => "Erro interno no servidor."];
+                return (object) ["code" => $code, "mensagem" => "Erro interno no servidor."];
             case 501:
-                return ["code" => $code, "mensagem" => "O método HTTP que você usou não é implementado para o recurso solicitado."];
+                return (object) ["code" => $code, "mensagem" => "Este método não é implementado para esse recurso."];
             case 502:
-                return ["code" => $code, "mensagem" => "Ocorreu um erro na infraestrutura Paggi."];
+                return (object) ["code" => $code, "mensagem" => "Ocorreu um erro na infraestrutura Paggi."];
             case 503:
-                return ["code" => $code, "mensagem" => "Ocorreu um erro na infraestrutura Paggi."];
+                return (object) ["code" => $code, "mensagem" => "Ocorreu um erro na infraestrutura Paggi."];
             default:
                 return new $reflectedClass($contents);
         }
-
     }
 
     /**
