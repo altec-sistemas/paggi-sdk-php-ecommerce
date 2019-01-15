@@ -13,6 +13,7 @@ composer require paggi/sdk-ecommerce
 ### Cartões:
 
 ```php
+require "vendor/autoload.php"
 use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $target = new \Paggi\SDK\Card();
@@ -34,6 +35,8 @@ $card = $target->create($cardParams);
 ### Pedidos
 
 ```php
+require "vendor/autoload.php"
+use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $OrderCreator = new \Paggi\SDK\Order();
 $envConfiguration->setEnv("Staging");
@@ -71,6 +74,8 @@ $response = $OrderCreator->create($orderParams);
 ### Recebedores
 
 ```php
+require "vendor/autoload.php"
+use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $recipient = new \Paggi\SDK\Recipient();
 
@@ -97,6 +102,8 @@ $recipients = $recipient->create($recipientParams);
 ### Bancos
 
 ```php
+require "vendor/autoload.php"
+use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $bankFinder = new \Paggi\SDK\Bank();
 $envConfiguration->setEnv("Staging");
@@ -107,6 +114,8 @@ $banks = $bankFinder->find(["start"=>0, "count"=>20]);
 ### Planos
 
 ```php
+require "vendor/autoload.php"
+use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
 $planCreator = new \Paggi\SDK\Plan();
 $envConfiguration->setEnv("Staging");
