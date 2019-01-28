@@ -17,6 +17,7 @@ use Paggi\SDK\DynamicObjectGenerator;
 use Paggi\SDK\Traits\Create;
 use Paggi\SDK\Traits\Find;
 use Paggi\SDK\Traits\Update;
+use Paggi\SDK\Traits\Cancel;
 
 /**
  * This file control subscription's methods
