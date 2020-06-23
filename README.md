@@ -8,19 +8,25 @@ Utilize este SDK para realizar a integração com nossa API de ecommerce.
 composer require paggi/sdk-ecommerce
 ```
 
-## Utilização
-
-### Cartões:
-
+## Configuração de Ambiente
 ```php
 require "vendor/autoload.php"
 use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-$target = new \Paggi\SDK\Card();
 $envConfiguration->setEnv("Staging");
 $envConfiguration->setToken(getenv("TOKEN"));
 $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
-$cardParams =
+```
+
+## Utilização
+ 
+### Cartões:
+
+```php
+
+$target = new \Paggi\SDK\Card();
+
+$params =
 [
     "cvc" => "123",
     "year" => "2022",
@@ -29,61 +35,49 @@ $cardParams =
     "holder" => "BRUCE WAYNER",
     "document" => "16123541090"
 ];
-$card = $target->create($cardParams);
+
+$response = $target->create($params);
 ```
 
 ### Pedidos
 
 ```php
-require "vendor/autoload.php"
-use Paggi\SDK;
-$envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-$OrderCreator = new \Paggi\SDK\Order();
-$envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("TOKEN"));
-$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
-$charge =
-[
-    "amount" => 5000,
-    "installments" => 10,
-    "card" =>
-    [
-        "number" => "5573710095684403",
-        "cvc" => "123",
-        "holder" => "BRUCE WAYNE",
-        "year" => "2020",
-        "month" => "04",
-        "document" => "16123541090"
-    ]
-];
-$orderParams=
+
+$target = new \Paggi\SDK\Order();
+
+$params=
 [
     "external_identifier" => "ABC123",
     "ip" => "8.8.8.8",
-    "charges" => [$charge],
-    "customer" =>
-    [
+    "charges" => [
+        "amount" => 5000,
+        "installments" => 10,
+            "card" => [
+                "number" => "5573710095684403",
+                "cvc" => "123",
+                "holder" => "BRUCE WAYNE",
+                "year" => "2020",
+                "month" => "04",
+                "document" => "16123541090"
+            ]                        
+        ];,
+    "customer" => [
         "name" => "Bruce Wayne",
         "document" => "86219425006",
         "email" => "bruce@waynecorp.com"
     ]
 ];
-$response = $OrderCreator->create($orderParams);
+
+$response = $target->create($params);
 ```
 
 ### Recebedores
 
 ```php
-require "vendor/autoload.php"
-use Paggi\SDK;
-$envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-$recipient = new \Paggi\SDK\Recipient();
 
-$envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("TOKEN"));
-$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
+$target = new \Paggi\SDK\Recipient();
 
-$recipientParams
+$params
   = [
   "name" => "BRUCE WAYNER",
   "document" => "78945612389",
@@ -96,32 +90,25 @@ $recipientParams
     "account_digit" => "4",
   ],
 ];
-$recipients = $recipient->create($recipientParams);
+
+$response = $target->create($params);
 ```
 
 ### Bancos
 
 ```php
-require "vendor/autoload.php"
-use Paggi\SDK;
-$envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-$bankFinder = new \Paggi\SDK\Bank();
-$envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("TOKEN"));
-$envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
-$banks = $bankFinder->find(["start"=>0, "count"=>20]);
-```
+
+$target = new \Paggi\SDK\Bank();
+
+$response = $target->find(["start"=>0, "count"=>20]);```
+
 ### Planos
 
 ```php
-require "vendor/autoload.php"
-use Paggi\SDK;
-$envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-$planCreator = new \Paggi\SDK\Plan();
-$envConfiguration->setEnv("Staging");
-$envConfiguration->setToken(getenv("ENVTOKEN"));
 
-$planParams =
+$target = new \Paggi\SDK\Plan();
+
+$params =
 [
     "name" => "Meu primeiro plano",
     "price" => 1990,
@@ -131,7 +118,7 @@ $planParams =
     "description"=> "Teste"
 ];
 
-$response = $planCreator->create($planParams);
+$response = $target->create($params);
 ```
 
 ### Mais informações
