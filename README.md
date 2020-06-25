@@ -14,7 +14,7 @@ composer require paggi/sdk-ecommerce
 require "vendor/autoload.php"
 use Paggi\SDK;
 $envConfiguration = new \Paggi\SDK\EnvironmentConfiguration();
-$envConfiguration->setEnv("Staging");
+$envConfiguration->setEnv("Staging"); // Staging or Production
 $envConfiguration->setToken(getenv("TOKEN"));
 $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 ```
