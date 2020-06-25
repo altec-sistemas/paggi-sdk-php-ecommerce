@@ -24,10 +24,11 @@ $envConfiguration->setPartnerIdByToken(getenv("TOKEN"));
 
 ```php
 
+> Criar cartão:
+
 $target = new \Paggi\SDK\Card();
 
-$params =
-[
+$post_params = [
     "cvc" => "123",
     "year" => "2022",
     "number" => "4123200700046446",
@@ -36,7 +37,26 @@ $params =
     "document" => "16123541090"
 ];
 
-$response = $target->create($params);
+$response = $target->create($post_params);
+
+
+> Consultar cartão por cliente: 
+
+$get_params = [
+    "document" => 123.123.123-12
+];  
+
+$response = $target->find($get_params);
+
+
+> Desativar cartão: 
+
+$inactive_params = [
+    "card_id" = " "
+];
+
+$response = $target->delete($get_params);
+
 ```
 
 ### Pedidos
