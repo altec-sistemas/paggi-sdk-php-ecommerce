@@ -77,10 +77,12 @@ $response = $target->create($params);
 
 $target = new \Paggi\SDK\Recipient();
 
-$params
-  = [
+$params = [
   "name" => "BRUCE WAYNER",
   "document" => "78945612389",
+  "amount" => 1020,
+  "transfer_amount" => 12,
+  "percentage" => 3,
   "bank_account" =>
   [
     "bank_code" => "077",
