@@ -52,11 +52,7 @@ $response = $target->find($params);
 
 > Desativar cartão: 
 
-$inactive_params = [
-    "card_id" => "a2e60adb-581d-4ac0-b46e-d848ab3ab891"
-];
-
-$response = $target->delete($get_params);
+$response = $target->delete($card_id);
 
 ```
 
@@ -96,11 +92,7 @@ $response = $target->create($params);
 
 > Cancelar Pagamento
 
-$params = [
-    "order_id" => "2cc931bc-cbe0-4fd8-aa34-0c2693d5123c"
-]
-
-$response = $target->cancel($params);
+$response = $target->cancel($order_id);
 ```
 
 ### Recebedores
@@ -121,9 +113,6 @@ $target = new \Paggi\SDK\Recipient();
 $params = [
   "name" => "BRUCE WAYNER",
   "document" => "78945612389",
-  "amount" => 1020,
-  "transfer_amount" => 12,
-  "percentage" => 3,
   "bank_account" => [
     "bank_code" => "077",
     "branch_number" => "0001",
@@ -146,9 +135,6 @@ $reponse = $target->find();
 $params = [
   "name" => "BRUCE WAYNER",
   "document" => "78945612389",
-  "amount" => 1020,
-  "transfer_amount" => 12,
-  "percentage" => 3,
   "bank_account" => [
     "bank_code" => "077",
     "branch_number" => "0123",
@@ -212,11 +198,7 @@ $response = $target->update($params, $plan_id);
 
 > Cancelar plano: 
 
-$params = [
-    "plan_id" => "7f42a0a0-6ae8-4a57-a340-a8c4867771eb"
-]
-
-$response = $target->delete($params);
+$response = $target->delete($plan_id);
 ```
 
 ### Mais informações
