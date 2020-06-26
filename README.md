@@ -144,12 +144,23 @@ $reponse = $target->find();
 > Atualizar Recebedor:
 
 $params = [
-    "recipient_id" => "01ae7814-a124-44a0-b892-e0e428b91f1e",
-    "transfer_amount" => 10,
-    "percentage" => 4
+  "name" => "BRUCE WAYNER",
+  "document" => "78945612389",
+  "amount" => 1020,
+  "transfer_amount" => 12,
+  "percentage" => 3,
+  "bank_account" => [
+    "bank_code" => "077",
+    "branch_number" => "0123",
+    "branch_digit" => "4",
+    "account_number" => "330233",
+    "account_digit" => "7",
+    "account_holder_name" => "BRUCE WAYNE"
+    "account_type" => "CONTA_CORRENTE"
+  ],
 ];
 
-$response = $target->update($params);
+$response = $target->update($params, $recipient_id);
 
 ```
 
@@ -192,12 +203,11 @@ $response = $target->find($params);
 > Atualizar plano:
 
 $params = [
-    "plan_id" => "7f42a0a0-6ae8-4a57-a340-a8c4867771eb",
     "price" => 2990,
     "interval" => "3m"
 ]
 
-$response = $target->update($params);
+$response = $target->update($params, $plan_id);
 
 
 > Cancelar plano: 
