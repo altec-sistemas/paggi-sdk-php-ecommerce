@@ -111,16 +111,16 @@ $target = new \Paggi\SDK\Recipient();
 > Criar Recebedor:
 
 $params = [
-  "name" => "BRUCE WAYNER",
-  "document" => "78945612389",
-  "bank_account" => [
-    "bank_code" => "077",
-    "branch_number" => "0001",
-    "branch_digit" => "5",
-    "account_number" => "120003",
-    "account_digit" => "4",
-    "account_holder_name" => "BRUCE WAYNE"
-    "account_type" => "CONTA_CORRENTE"
+    "name" => "BRUCE WAYNER",
+    "document" => "78945612389",
+    "bank_account" => [
+        "bank_code" => "077",
+        "branch_number" => "0001",
+        "branch_digit" => "5",
+        "account_number" => "120003",
+        "account_digit" => "4",
+        "account_holder_name" => "BRUCE WAYNE"
+        "account_type" => "CONTA_CORRENTE"
   ],
 ];
 
@@ -133,16 +133,16 @@ $reponse = $target->find();
 > Atualizar Recebedor:
 
 $params = [
-  "name" => "BRUCE WAYNER",
-  "document" => "78945612389",
-  "bank_account" => [
-    "bank_code" => "077",
-    "branch_number" => "0123",
-    "branch_digit" => "4",
-    "account_number" => "330233",
-    "account_digit" => "7",
-    "account_holder_name" => "BRUCE WAYNE"
-    "account_type" => "CONTA_CORRENTE"
+    "name" => "BRUCE WAYNER",
+    "document" => "78945612389",
+    "bank_account" => [
+        "bank_code" => "077",
+        "branch_number" => "0123",
+        "branch_digit" => "4",
+        "account_number" => "330233",
+        "account_digit" => "7",
+        "account_holder_name" => "BRUCE WAYNE"
+        "account_type" => "CONTA_CORRENTE"
   ],
 ];
 
@@ -159,11 +159,18 @@ $target = new \Paggi\SDK\Bank();
 $response = $target->find(["start"=>0, "count"=>20]);
 ```
 
-### Planos
+
+### Planos / Assinaturas
+
+
+Para criar uma assinatura é necessário um plano existente.
+O Plano controla o valor, intervalo entre pagamentos, duração, período de teste da assinatura.
+A Assinatura é responsável pelo pagamento, assim como desconto e preços adicionais se necessário.
 
 ```php
 
-$target = new \Paggi\SDK\Plan();
+$plan = new \Paggi\SDK\Plan();
+$subscription = new \Paggi\SDK\Subscription();
 
 > Criar Plano:
 
@@ -176,7 +183,40 @@ $params = [
     "description"=> "Teste"
 ];
 
-$response = $target->create($params);
+$response = $plan->create($params);
+
+> Criar Assinatura:
+
+$params = [
+    "external_identifier" => "Seu ID de assinatura",
+    "plan_id" => plan["id"],
+    "ip" => "8.8.8.8",
+    "customer" => [
+        "name" => "Bruce Wayne",
+        "document" => "86219425006",
+        "email" => "bruce@waynecorp.com"
+   ],
+    "card" => [
+        "cvc" => "123",
+         "year" => "2020",
+        "month" => "01",
+          "number" => "4485200700046446",
+        "holder" => "BRUCE WAYNER",
+        "document" => "16223541090"
+   ],
+    "discount" => [
+            "period" => 2,
+            "description" => "Teste de discount",
+         "  amount" => 2000
+   ],
+    "additional" => [
+            "period" => 3,
+            "description" => "Teste de additional",
+            "amount" => 1999
+        ]
+]
+
+$response = $subscription->find($params);
 
 > Consultar plano:
 
@@ -184,7 +224,7 @@ $params = [
     "plan_id" => "7f42a0a0-6ae8-4a57-a340-a8c4867771eb"
 ]
 
-$response = $target->find($params);
+$response = $plan->find($params);
 
 > Atualizar plano:
 
@@ -193,12 +233,14 @@ $params = [
     "interval" => "3m"
 ]
 
-$response = $target->update($params, $plan_id);
+$response = $plan->update($params, $plan_id);
 
 
 > Cancelar plano: 
 
-$response = $target->delete($plan_id);
+$plan_id = "7f42a0a0-6ae8-4a57-a340-a8c4867771eb"
+
+$response = $plan->delete($plan_id);
 ```
 
 ### Mais informações
